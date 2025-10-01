@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Your Biz Superpower 🚀 | UALR</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 800px;
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+
+        .quiz-container {
+            padding: 30px;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 10px;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        .question-card {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideUp 0.5s ease forwards;
+        }
+
+        .question-card:nth-child(even) {
+            animation-delay: 0.1s;
+        }
+
+        .question-text {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .rating-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .rating-label {
+            font-size: 0.85em;
+            color: #666;
+            min-width: 80px;
+        }
+
+        .rating-label.left {
+            text-align: right;
+        }
+
+        .rating-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .rating-btn {
+            width: 45px;
+            height: 45px;
+            border: 2px solid #ddd;
+            background: white;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            font-size: 1.1em;
+            color: #666;
+        }
+
+        .rating-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+            border-color: #667eea;
+        }
+
+        .rating-btn.selected {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: transparent;
+            transform: scale(1.1);
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2em;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 30px auto;
+            display: block;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .submit-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .result-container {
+            display: none;
+            padding: 30px;
+            text-align: center;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .result-badge {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 20px 40px;
+            border-radius: 50px;
+            display: inline-block;
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(245, 87, 108, 0.4);
+            animation: bounce 1s ease;
+        }
+
+        .result-title {
+            font-size: 2.5em;
+            color: #333;
+            margin-bottom: 10px;
+            animation: slideInLeft 0.8s ease;
+        }
+
+        .result-subtitle {
+            font-size: 1.3em;
+            color: #666;
+            margin-bottom: 30px;
+            animation: slideInRight 0.8s ease;
+        }
+
+        .result-details {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            text-align: left;
+            animation: fadeInUp 0.8s ease 0.3s both;
+        }
+
+        .result-details h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .result-details p {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .swot-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .swot-box {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid;
+            animation: fadeInUp 0.8s ease 0.5s both;
+        }
+
+        .swot-box.strength {
+            border-color: #4caf50;
+        }
+
+        .swot-box.weakness {
+            border-color: #ff9800;
+        }
+
+        .swot-box.opportunity {
+            border-color: #2196f3;
+        }
+
+        .swot-box.threat {
+            border-color: #f44336;
+        }
+
+        .swot-box h4 {
+            font-size: 0.9em;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            opacity: 0.7;
+        }
+
+        .swot-box p {
+            font-size: 0.95em;
+            line-height: 1.4;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            padding: 12px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .action-btn.primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .action-btn.secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        @media (max-width: 600px) {
+            .rating-container {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .rating-label {
+                width: 100%;
+                text-align: center !important;
+            }
+            
+            .swot-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .result-title {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Find Your Biz Superpower 🎯</h1>
+            <p>90-second quiz to discover your perfect business major</p>
+        </div>
+
+        <div id="quizContainer" class="quiz-container">
+            <div class="progress-bar">
+                <div id="progressFill" class="progress-fill"></div>
+            </div>
+            <div id="questions"></div>
+            <button id="submitBtn" class="submit-btn" onclick="calculateResults()" disabled>
+                Discover My Superpower ✨
+            </button>
+        </div>
+
+        <div id="resultContainer" class="result-container"></div>
+    </div>
+
+    <script>
+        const questions = [
+            { id: 1, text: "I love brainstorming slogans, visuals, or campaign ideas", category: "MKT" },
+            { id: 2, text: "I enjoy solving puzzles with data, charts, or spreadsheets", category: "FIN" },
+            { id: 3, text: "I'm comfortable taking a smart risk to test a new idea", category: "ENT" },
+            { id: 4, text: "I naturally organize people and tasks to get things done", category: "MGT" },
+            { id: 5, text: "Other cultures and languages fascinate me", category: "IB" },
+            { id: 6, text: "I'm curious about how apps/databases/AI power businesses", category: "BAIS" },
+            { id: 7, text: "I like persuading people—pitching, selling, or storytelling", category: "MKT" },
+            { id: 8, text: "I notice small errors and want the numbers to be exact", category: "ACC" },
+            { id: 9, text: "I'd rather build something new than follow the crowd", category: "ENT" },
+            { id: 10, text: "I enjoy helping a team work well together", category: "MGT" },
+            { id: 11, text: "I want a career with travel or global connections", category: "IB" },
+            { id: 12, text: "I like turning messy info into clean dashboards or systems", category: "BAIS" },
+            { id: 13, text: "I follow brands and think about why customers love them", category: "MKT" },
+            { id: 14, text: "I'm drawn to investing, money flows, or financial markets", category: "FIN" },
+            { id: 15, text: "I'd love to start my own venture one day", category: "ENT" },
+            { id: 16, text: "I enjoy coaching or leading groups toward a goal", category: "MGT" },
+            { id: 17, text: "I'm interested in how business works across countries", category: "IB" },
+            { id: 18, text: "I want to automate tasks and make processes smarter", category: "BAIS" }
+        ];
+
+        const profiles = {
+            MKT: {
+                title: "The Storyteller",
+                icon: "🎨",
+                roleModel: "David Ogilvy (Advertising Legend)",
+                description: "You think like a customer, love creative campaigns, and enjoy influencing",
+                path: "B.B.A. in Marketing with focus on advertising, digital marketing, and professional sales",
+                professor: "Dr. David Gilliam or Dr. Casey Rockwell",
+                strengths: ["Empathy for customers", "Creative ideation", "Persuasive communication"],
+                weaknesses: ["May over-index on ideas vs. data", "Need to balance creativity with analytics"],
+                opportunities: ["Digital Marketing Certificate", "Professional Sales Competition", "Marketing Club Leadership"],
+                threats: ["Fast-changing digital landscape", "Need for data skills"],
+                leadership: "Storyteller/Influencer"
+            },
+            FIN: {
+                title: "The Strategic Investor",
+                icon: "📈",
+                roleModel: "Warren Buffett",
+                description: "You're drawn to markets, valuation, and smart risk-taking",
+                path: "B.B.A. in Finance (General, Financial Services & Risk Management, or Real Estate)",
+                professor: "Dr. Gaurav Kumar",
+                strengths: ["Quantitative rigor", "Risk awareness", "Long-term thinking"],
+                weaknesses: ["Analysis paralysis", "Need storytelling skills"],
+                opportunities: ["Investment Club", "Bloomberg Terminal Training", "Finance Internships"],
+                threats: ["Complex math requirements", "Competitive field"],
+                leadership: "Analytical Strategist"
+            },
+            ACC: {
+                title: "The Detail Guardian",
+                icon: "🔍",
+                roleModel: "Mary T. Barra (GM CEO - precision + execution)",
+                description: "You notice errors, love accuracy, and want to speak the language of business",
+                path: "B.B.A. in Accounting - CPA aligned, available online",
+                professor: "Dr. Mark Funk",
+                strengths: ["Accuracy obsession", "Compliance mindset", "Process discipline"],
+                weaknesses: ["Perfectionism", "Slower decision-making"],
+                opportunities: ["CPA Prep Program", "Big 4 Recruiting", "Accounting Society"],
+                threats: ["Automation of routine tasks", "Need for tech skills"],
+                leadership: "Precision Operator"
+            },
+            BAIS: {
+                title: "The Systems Architect",
+                icon: "💻",
+                roleModel: "Satya Nadella (Microsoft CEO)",
+                description: "You like turning data into insight and building smart systems",
+                path: "B.B.A. in Business Analytics or Business Information Systems (STEM)",
+                professor: "John Hall",
+                strengths: ["Data literacy", "Automation mindset", "Process improvement"],
+                weaknesses: ["Tech tunnel vision", "Need people skills"],
+                opportunities: ["STEM Designation Benefits", "Analytics Certificate", "Tech Consulting"],
+                threats: ["Rapid tech changes", "Need for continuous learning"],
+                leadership: "Systems Thinker"
+            },
+            MGT: {
+                title: "The People-First Leader",
+                icon: "👥",
+                roleModel: "Indra Nooyi / Sheryl Sandberg",
+                description: "You organize teams, drive execution, and develop people",
+                path: "B.B.A. in Management (General, HR, or Innovation & Entrepreneurship)",
+                professor: "Dr. Yue Zhao or Dr. Karen Leonard",
+                strengths: ["Team building", "Execution focus", "Conflict resolution"],
+                weaknesses: ["Avoiding tough calls", "Scope creep"],
+                opportunities: ["Leadership Development Program", "HR Certificate", "Management Consulting"],
+                threats: ["Managing diverse teams", "Work-life balance"],
+                leadership: "People-First Coach"
+            },
+            IB: {
+                title: "The Global Diplomat",
+                icon: "🌍",
+                roleModel: "Indra Nooyi (global strategy expert)",
+                description: "You're curious about cultures and cross-border business",
+                path: "B.B.A. in International Business with field study experience",
+                professor: "Dr. Ashvin Vibhakar",
+                strengths: ["Cultural agility", "Negotiation skills", "Macro perspective"],
+                weaknesses: ["Complexity overload", "Travel demands"],
+                opportunities: ["International Field Study", "Language Minor", "Global Trade Certificate"],
+                threats: ["Geopolitical risks", "Language requirements"],
+                leadership: "Global Integrator"
+            },
+            ENT: {
+                title: "The Venture Catalyst",
+                icon: "🚀",
+                roleModel: "Sara Blakely / Daymond John",
+                description: "You love to launch, test, and iterate on new ideas",
+                path: "Innovation & Entrepreneurship emphasis in Management B.B.A.",
+                professor: "Dr. Yue Zhao",
+                strengths: ["Initiative", "Resilience", "Bias for action"],
+                weaknesses: ["Impulsiveness", "Resource constraints"],
+                opportunities: ["Startup Incubator", "Pitch Competitions", "Venture Capital Network"],
+                threats: ["High failure rate", "Financial uncertainty"],
+                leadership: "Builder/Founder"
+            }
+        };
+
+        let answers = {};
+
+        function initializeQuiz() {
+            const questionsContainer = document.getElementById('questions');
+            
+            questions.forEach((q, index) => {
+                const questionCard = document.createElement('div');
+                questionCard.className = 'question-card';
+                questionCard.style.animationDelay = `${index * 0.05}s`;
+                
+                questionCard.innerHTML = `
+                    <div class="question-text">${q.id}. ${q.text}</div>
+                    <div class="rating-container">
+                        <span class="rating-label left">Strongly<br>Disagree</span>
+                        <div class="rating-buttons">
+                            ${[1,2,3,4,5].map(value => `
+                                <button class="rating-btn" onclick="selectRating(${q.id}, ${value}, this)">
+                                    ${value}
+                                </button>
+                            `).join('')}
+                        </div>
+                        <span class="rating-label">Strongly<br>Agree</span>
+                    </div>
+                `;
+                
+                questionsContainer.appendChild(questionCard);
+            });
+        }
+
+        function selectRating(questionId, value, button) {
+            // Remove previous selection for this question
+            const parent = button.parentElement;
+            parent.querySelectorAll('.rating-btn').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            
+            // Add selection to clicked button
+            button.classList.add('selected');
+            
+            // Store answer
+            answers[questionId] = value;
+            
+            // Update progress
+            updateProgress();
+            
+            // Check if all questions answered
+            checkCompletion();
+        }
+
+        function updateProgress() {
+            const progress = (Object.keys(answers).length / questions.length) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+        }
+
+        function checkCompletion() {
+            const submitBtn = document.getElementById('submitBtn');
+            if (Object.keys(answers).length === questions.length) {
+                submitBtn.disabled = false;
+            }
+        }
+
+        function calculateResults() {
+            const scores = {
+                MKT: 0,
+                FIN: 0,
+                ACC: 0,
+                ENT: 0,
+                MGT: 0,
+                IB: 0,
+                BAIS: 0
+            };
+
+            // Calculate scores based on categories
+            questions.forEach(q => {
+                const answer = answers[q.id] || 0;
+                scores[q.category] += answer;
+            });
+
+            // Special accounting calculation
+            scores.ACC = (answers[8] || 0) + Math.max(answers[2] || 0, answers[14] || 0);
+
+            // Find the highest score
+            let maxScore = 0;
+            let topCategory = '';
+            for (const [category, score] of Object.entries(scores)) {
+                if (score > maxScore) {
+                    maxScore = score;
+                    topCategory = category;
+                }
+            }
+
+            // Display results
+            displayResults(topCategory, scores);
+        }
+
+        function displayResults(topCategory, scores) {
+            const profile = profiles[topCategory];
+            const resultContainer = document.getElementById('resultContainer');
+            
+            // Create personalized message
+            const encouragements = [
+                "Amazing! Your superpower is revealed!",
+                "Fantastic! We've discovered your business DNA!",
+                "Incredible! Your path to success is clear!"
+            ];
+            const randomEncouragement = encouragements[Math.floor(Math.random() * encouragements.length)];
+            
+            resultContainer.innerHTML = `
+                <div class="result-badge">${profile.icon} ${randomEncouragement}</div>
+                <h2 class="result-title">${profile.title}</h2>
+                <p class="result-subtitle">You could be the next ${profile.roleModel}</p>
+                
+                <div class="result-details">
+                    <h3>Why This Fits You:</h3>
+                    <p>${profile.description}</p>
+                    
+                    <h3>Your UALR Path:</h3>
+                    <p><strong>${profile.path}</strong></p>
+                    <p>Connect with: <strong>${profile.professor}</strong></p>
+                    
+                    <h3>Leadership Style: ${profile.leadership}</h3>
+                    
+                    <div class="swot-grid">
+                        <div class="swot-box strength">
+                            <h4>💪 Strengths</h4>
+                            <p>${profile.strengths.join(', ')}</p>
+                        </div>
+                        <div class="swot-box weakness">
+                            <h4>⚠️ Watch Out For</h4>
+                            <p>${profile.weaknesses.join(', ')}</p>
+                        </div>
+                        <div class="swot-box opportunity">
+                            <h4>🎯 Opportunities at UALR</h4>
+                            <p>${profile.opportunities.join(', ')}</p>
+                        </div>
+                        <div class="swot-box threat">
+                            <h4>🔍 Challenges to Prepare For</h4>
+                            <p>${profile.threats.join(', ')}</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="action-buttons">
+                    <a href="#" class="action-btn primary" onclick="saveResults()">
+                        📧 Email My Results
+                    </a>
+                    <a href="#" class="action-btn secondary" onclick="retakeQuiz()">
+                        🔄 Retake Quiz
+                    </a>
+                    <a href="#" class="action-btn primary" onclick="shareResults()">
+                        📱 Share Results
+                    </a>
+                </div>
+            `;
+            
+            // Hide quiz container and show results
+            document.getElementById('quizContainer').style.display = 'none';
+            resultContainer.style.display = 'block';
+        }
+
+        function saveResults() {
+            alert('Email feature would connect to your backend to send results. For now, take a screenshot!');
+        }
+
+        function retakeQuiz() {
+            answers = {};
+            document.getElementById('quizContainer').style.display = 'block';
+            document.getElementById('resultContainer').style.display = 'none';
+            document.querySelectorAll('.rating-btn').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            document.getElementById('progressFill').style.width = '0%';
+            document.getElementById('submitBtn').disabled = true;
+        }
+
+        function shareResults() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'My Business Superpower Results',
+                    text: 'I just discovered my business superpower at UALR! Take the quiz to find yours.',
+                    url: window.location.href
+                });
+            } else {
+                alert('Share this link with friends: ' + window.location.href);
+            }
+        }
+
+        // Initialize quiz on page load
+        initializeQuiz();
+    </script>
+</body>
+</html>
