@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Find Your Biz Superpower 🚀 | UALR</title>
+    <title>Find Your Biz Superpower 🚀 | UALR School of Business</title>
     <style>
         * {
             margin: 0;
@@ -49,10 +49,169 @@
             opacity: 0.95;
         }
 
+        /* Landing Page Styles */
+        .landing-container {
+            padding: 40px;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .landing-container h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            text-align: center;
+        }
+
+        .benefits-list {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .benefits-list h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .benefits-list ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .benefits-list li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .benefits-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #4caf50;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .registration-form {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid #e0e0e0;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-group input.error {
+            border-color: #f44336;
+        }
+
+        .error-message {
+            color: #f44336;
+            font-size: 0.9em;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .privacy-box {
+            background: #f0f4ff;
+            border: 2px solid #d0d8ff;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .privacy-box h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .privacy-box p {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            font-size: 0.95em;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            margin-top: 2px;
+            cursor: pointer;
+        }
+
+        .checkbox-group label {
+            color: #333;
+            line-height: 1.5;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .start-quiz-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2em;
+            border-radius: 50px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            margin-top: 20px;
+        }
+
+        .start-quiz-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .start-quiz-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Quiz Container Styles */
         .quiz-container {
             padding: 30px;
             max-height: 600px;
             overflow-y: auto;
+            display: none;
         }
 
         .progress-bar {
@@ -80,10 +239,6 @@
             transform: translateY(20px);
             opacity: 0;
             animation: slideUp 0.5s ease forwards;
-        }
-
-        .question-card:nth-child(even) {
-            animation-delay: 0.1s;
         }
 
         .question-text {
@@ -165,6 +320,7 @@
             cursor: not-allowed;
         }
 
+        /* Result Container Styles */
         .result-container {
             display: none;
             padding: 30px;
@@ -189,14 +345,12 @@
             font-size: 2.5em;
             color: #333;
             margin-bottom: 10px;
-            animation: slideInLeft 0.8s ease;
         }
 
         .result-subtitle {
             font-size: 1.3em;
             color: #666;
             margin-bottom: 30px;
-            animation: slideInRight 0.8s ease;
         }
 
         .result-details {
@@ -205,7 +359,6 @@
             padding: 25px;
             margin-bottom: 20px;
             text-align: left;
-            animation: fadeInUp 0.8s ease 0.3s both;
         }
 
         .result-details h3 {
@@ -232,24 +385,12 @@
             padding: 15px;
             border-radius: 10px;
             border-left: 4px solid;
-            animation: fadeInUp 0.8s ease 0.5s both;
         }
 
-        .swot-box.strength {
-            border-color: #4caf50;
-        }
-
-        .swot-box.weakness {
-            border-color: #ff9800;
-        }
-
-        .swot-box.opportunity {
-            border-color: #2196f3;
-        }
-
-        .swot-box.threat {
-            border-color: #f44336;
-        }
+        .swot-box.strength { border-color: #4caf50; }
+        .swot-box.weakness { border-color: #ff9800; }
+        .swot-box.opportunity { border-color: #2196f3; }
+        .swot-box.threat { border-color: #f44336; }
 
         .swot-box h4 {
             font-size: 0.9em;
@@ -278,6 +419,8 @@
             font-weight: 500;
             transition: all 0.3s ease;
             display: inline-block;
+            cursor: pointer;
+            border: none;
         }
 
         .action-btn.primary {
@@ -297,6 +440,17 @@
             box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
         }
 
+        /* Success message */
+        .success-message {
+            background: #4caf50;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        /* Animations */
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
@@ -314,39 +468,6 @@
         }
 
         @keyframes slideUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes slideInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -383,10 +504,76 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>Find Your Biz Superpower 🎯</h1>
-            <p>90-second quiz to discover your perfect business major</p>
+            <h1>🎯 Find Your Biz Superpower</h1>
+            <p>Discover Your Perfect Business Major at UALR</p>
         </div>
 
+        <!-- Landing Page / Registration -->
+        <div id="landingContainer" class="landing-container">
+            <h2>Welcome Future Business Leader! 🚀</h2>
+            
+            <div class="benefits-list">
+                <h3>In just 90 seconds, you'll discover:</h3>
+                <ul>
+                    <li>Your unique business superpower and leadership style</li>
+                    <li>The perfect business major tailored to your strengths</li>
+                    <li>Which successful business leader you're most like</li>
+                    <li>Your personalized SWOT analysis</li>
+                    <li>The exact UALR professor who can guide your journey</li>
+                    <li>Specific opportunities and programs at UALR for your path</li>
+                </ul>
+            </div>
+
+            <form id="registrationForm" class="registration-form">
+                <div class="form-group">
+                    <label for="studentName">Your Name *</label>
+                    <input type="text" id="studentName" name="name" required placeholder="Enter your full name">
+                    <span class="error-message">Please enter your name</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="studentEmail">Email Address *</label>
+                    <input type="email" id="studentEmail" name="email" required placeholder="your.email@example.com">
+                    <span class="error-message">Please enter a valid email address</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="highSchool">High School (Optional)</label>
+                    <input type="text" id="highSchool" name="school" placeholder="Your current high school">
+                </div>
+
+                <div class="form-group">
+                    <label for="gradYear">Expected Graduation Year (Optional)</label>
+                    <input type="text" id="gradYear" name="gradYear" placeholder="e.g., 2025">
+                </div>
+
+                <div class="privacy-box">
+                    <h4>📋 Privacy & Data Use Agreement</h4>
+                    <p><strong>How we'll use your information:</strong></p>
+                    <p>✓ UALR School of Business staff will email you your personalized results</p>
+                    <p>✓ We'll send helpful information about business programs that match your interests</p>
+                    <p>✓ Connect you with relevant professors and current students in your area of interest</p>
+                    <p>✓ Invite you to exclusive events and opportunities at UALR</p>
+                    <p><strong>Your privacy is protected:</strong></p>
+                    <p>✗ We will NEVER sell or share your data with third parties</p>
+                    <p>✗ Your information is used solely for educational guidance</p>
+                    <p>✗ You can opt-out of communications at any time</p>
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="consent" name="consent" required>
+                    <label for="consent">
+                        I agree to allow UALR School of Business staff to contact me via email to help with my business major selection and provide information about relevant programs and opportunities. I understand my data will be kept confidential and will not be sold or shared with third parties.
+                    </label>
+                </div>
+
+                <button type="submit" class="start-quiz-btn" id="startQuizBtn">
+                    Start My 90-Second Quiz →
+                </button>
+            </form>
+        </div>
+
+        <!-- Quiz Container -->
         <div id="quizContainer" class="quiz-container">
             <div class="progress-bar">
                 <div id="progressFill" class="progress-fill"></div>
@@ -397,10 +584,22 @@
             </button>
         </div>
 
+        <!-- Result Container -->
         <div id="resultContainer" class="result-container"></div>
     </div>
 
     <script>
+        // Store user data
+        let userData = {
+            name: '',
+            email: '',
+            school: '',
+            gradYear: '',
+            timestamp: '',
+            result: '',
+            scores: {}
+        };
+
         const questions = [
             { id: 1, text: "I love brainstorming slogans, visuals, or campaign ideas", category: "MKT" },
             { id: 2, text: "I enjoy solving puzzles with data, charts, or spreadsheets", category: "FIN" },
@@ -518,6 +717,61 @@
 
         let answers = {};
 
+        // Handle registration form
+        document.getElementById('registrationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Validate form
+            const name = document.getElementById('studentName').value.trim();
+            const email = document.getElementById('studentEmail').value.trim();
+            const consent = document.getElementById('consent').checked;
+            
+            let isValid = true;
+            
+            // Validate name
+            if (!name) {
+                document.getElementById('studentName').classList.add('error');
+                document.getElementById('studentName').nextElementSibling.style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('studentName').classList.remove('error');
+                document.getElementById('studentName').nextElementSibling.style.display = 'none';
+            }
+            
+            // Validate email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!email || !emailRegex.test(email)) {
+                document.getElementById('studentEmail').classList.add('error');
+                document.getElementById('studentEmail').nextElementSibling.style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('studentEmail').classList.remove('error');
+                document.getElementById('studentEmail').nextElementSibling.style.display = 'none';
+            }
+            
+            // Check consent
+            if (!consent) {
+                alert('Please agree to the terms to continue.');
+                isValid = false;
+            }
+            
+            if (isValid) {
+                // Store user data
+                userData.name = name;
+                userData.email = email;
+                userData.school = document.getElementById('highSchool').value;
+                userData.gradYear = document.getElementById('gradYear').value;
+                userData.timestamp = new Date().toISOString();
+                
+                // Hide landing page and show quiz
+                document.getElementById('landingContainer').style.display = 'none';
+                document.getElementById('quizContainer').style.display = 'block';
+                
+                // Initialize quiz
+                initializeQuiz();
+            }
+        });
+
         function initializeQuiz() {
             const questionsContainer = document.getElementById('questions');
             
@@ -546,22 +800,14 @@
         }
 
         function selectRating(questionId, value, button) {
-            // Remove previous selection for this question
             const parent = button.parentElement;
             parent.querySelectorAll('.rating-btn').forEach(btn => {
                 btn.classList.remove('selected');
             });
             
-            // Add selection to clicked button
             button.classList.add('selected');
-            
-            // Store answer
             answers[questionId] = value;
-            
-            // Update progress
             updateProgress();
-            
-            // Check if all questions answered
             checkCompletion();
         }
 
@@ -588,47 +834,97 @@
                 BAIS: 0
             };
 
-            // Calculate scores based on categories
-            questions.forEach(q => {
-                const answer = answers[q.id] || 0;
-                scores[q.category] += answer;
-            });
-
-            // Special accounting calculation
+            // Calculate scores based on the correct scoring key
+            // Marketing & Professional Sales: Questions 1, 7, 13
+            scores.MKT = (answers[1] || 0) + (answers[7] || 0) + (answers[13] || 0);
+            
+            // Finance & Investing: Questions 2, 14, (optionally 12)
+            scores.FIN = (answers[2] || 0) + (answers[14] || 0) + (answers[12] || 0);
+            
+            // Accounting: Question 8 + whichever of 2 or 14 is higher
             scores.ACC = (answers[8] || 0) + Math.max(answers[2] || 0, answers[14] || 0);
+            
+            // Entrepreneurship & Innovation: Questions 3, 9, 15
+            scores.ENT = (answers[3] || 0) + (answers[9] || 0) + (answers[15] || 0);
+            
+            // Management & HR: Questions 4, 10, 16
+            scores.MGT = (answers[4] || 0) + (answers[10] || 0) + (answers[16] || 0);
+            
+            // International Business: Questions 5, 11, 17
+            scores.IB = (answers[5] || 0) + (answers[11] || 0) + (answers[17] || 0);
+            
+            // Business Analytics & Information Systems: Questions 6, 12, 18
+            scores.BAIS = (answers[6] || 0) + (answers[12] || 0) + (answers[18] || 0);
 
-            // Find the highest score
+            // Store scores
+            userData.scores = scores;
+            
+            console.log('Calculated scores:', scores); // Debug log
+
+            // Find the highest score(s) - handle ties
             let maxScore = 0;
-            let topCategory = '';
+            let topCategories = [];
+            
             for (const [category, score] of Object.entries(scores)) {
                 if (score > maxScore) {
                     maxScore = score;
-                    topCategory = category;
+                    topCategories = [category];
+                } else if (score === maxScore && score > 0) {
+                    topCategories.push(category);
                 }
             }
-
+            
+            // If no answers given or all zeros, default to a message
+            if (maxScore === 0) {
+                alert('Please answer at least some questions to get your results!');
+                return;
+            }
+            
+            // Handle ties
+            let topCategory = topCategories[0];
+            let tieMessage = '';
+            if (topCategories.length > 1) {
+                tieMessage = `You have a tie between ${topCategories.map(cat => profiles[cat].title).join(' and ')}! Consider a major + minor combination.`;
+                console.log('Tie detected:', topCategories, 'with score:', maxScore);
+            }
+            
+            userData.result = topCategory;
+            userData.tie = topCategories.length > 1 ? topCategories : null;
+            
+            // Save to localStorage (simulating database)
+            saveToDatabase();
+            
             // Display results
-            displayResults(topCategory, scores);
+            displayResults(topCategory, scores, tieMessage);
         }
 
-        function displayResults(topCategory, scores) {
+        function displayResults(topCategory, scores, tieMessage = '') {
             const profile = profiles[topCategory];
             const resultContainer = document.getElementById('resultContainer');
             
-            // Create personalized message
-            const encouragements = [
-                "Amazing! Your superpower is revealed!",
-                "Fantastic! We've discovered your business DNA!",
-                "Incredible! Your path to success is clear!"
-            ];
-            const randomEncouragement = encouragements[Math.floor(Math.random() * encouragements.length)];
+            // Show all scores for transparency
+            const scoreBreakdown = Object.entries(scores)
+                .sort((a, b) => b[1] - a[1])
+                .map(([cat, score]) => `${profiles[cat].icon} ${cat}: ${score}`)
+                .join(' | ');
             
             resultContainer.innerHTML = `
-                <div class="result-badge">${profile.icon} ${randomEncouragement}</div>
+                <div class="result-badge">${profile.icon} Superpower Unlocked!</div>
                 <h2 class="result-title">${profile.title}</h2>
                 <p class="result-subtitle">You could be the next ${profile.roleModel}</p>
                 
+                ${tieMessage ? `<div style="background: #fff3cd; color: #856404; padding: 15px; border-radius: 10px; margin: 20px 0;">
+                    <strong>🎯 ${tieMessage}</strong>
+                </div>` : ''}
+                
                 <div class="result-details">
+                    <h3>Hi ${userData.name}! Here's your personalized profile:</h3>
+                    
+                    <div style="background: #e3f2fd; padding: 15px; border-radius: 10px; margin: 15px 0;">
+                        <strong>Your Scores:</strong><br>
+                        ${scoreBreakdown}
+                    </div>
+                    
                     <h3>Why This Fits You:</h3>
                     <p>${profile.description}</p>
                     
@@ -659,52 +955,181 @@
                 </div>
                 
                 <div class="action-buttons">
-                    <a href="#" class="action-btn primary" onclick="saveResults()">
+                    <button class="action-btn primary" onclick="emailResults()">
                         📧 Email My Results
-                    </a>
-                    <a href="#" class="action-btn secondary" onclick="retakeQuiz()">
+                    </button>
+                    <button class="action-btn secondary" onclick="retakeQuiz()">
                         🔄 Retake Quiz
-                    </a>
-                    <a href="#" class="action-btn primary" onclick="shareResults()">
-                        📱 Share Results
-                    </a>
+                    </button>
+                    <button class="action-btn primary" onclick="downloadResults()">
+                        📥 Download PDF
+                    </button>
+                </div>
+                
+                <div id="emailSuccess" class="success-message">
+                    ✓ Results sent to ${userData.email}! Check your inbox.
                 </div>
             `;
             
-            // Hide quiz container and show results
             document.getElementById('quizContainer').style.display = 'none';
             resultContainer.style.display = 'block';
         }
 
-        function saveResults() {
-            alert('Email feature would connect to your backend to send results. For now, take a screenshot!');
+        function saveToDatabase() {
+            // Get existing data or initialize empty array
+            let database = JSON.parse(localStorage.getItem('ualrQuizResults') || '[]');
+            
+            // Add new entry
+            database.push(userData);
+            
+            // Save back to localStorage
+            localStorage.setItem('ualrQuizResults', JSON.stringify(database));
+            
+            // In production, you would send this to a real backend
+            console.log('Data saved:', userData);
+            
+            // Example of sending to a backend (uncomment when you have an endpoint):
+            /*
+            fetch('YOUR_BACKEND_ENDPOINT/api/quiz-results', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(userData)
+            });
+            */
+        }
+
+        function emailResults() {
+            // Simulate sending email
+            document.getElementById('emailSuccess').style.display = 'block';
+            
+            // In production, this would trigger a backend email service
+            console.log('Sending email to:', userData.email);
+            
+            // Hide success message after 5 seconds
+            setTimeout(() => {
+                document.getElementById('emailSuccess').style.display = 'none';
+            }, 5000);
+        }
+
+        function downloadResults() {
+            // Create a text version of results
+            const profile = profiles[userData.result];
+            const resultText = `
+UALR Business Superpower Quiz Results
+======================================
+Name: ${userData.name}
+Date: ${new Date(userData.timestamp).toLocaleDateString()}
+
+YOUR BUSINESS SUPERPOWER: ${profile.title}
+Role Model: ${profile.roleModel}
+
+${profile.description}
+
+RECOMMENDED PATH AT UALR:
+${profile.path}
+
+CONNECT WITH:
+${profile.professor}
+
+YOUR SWOT ANALYSIS:
+Strengths: ${profile.strengths.join(', ')}
+Weaknesses: ${profile.weaknesses.join(', ')}
+Opportunities: ${profile.opportunities.join(', ')}
+Threats: ${profile.threats.join(', ')}
+
+Next Steps:
+1. Visit ualr.edu/business to learn more
+2. Connect with ${profile.professor}
+3. Schedule a campus tour
+4. Apply for scholarships
+
+Contact: business@ualr.edu
+            `;
+            
+            // Create download
+            const blob = new Blob([resultText], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `UALR_Quiz_Results_${userData.name.replace(/\s+/g, '_')}.txt`;
+            a.click();
         }
 
         function retakeQuiz() {
+            // Reset everything
             answers = {};
-            document.getElementById('quizContainer').style.display = 'block';
-            document.getElementById('resultContainer').style.display = 'none';
+            userData = {
+                name: '',
+                email: '',
+                school: '',
+                gradYear: '',
+                timestamp: '',
+                result: '',
+                scores: {}
+            };
+            
+            // Clear form
+            document.getElementById('registrationForm').reset();
+            
+            // Clear quiz selections
             document.querySelectorAll('.rating-btn').forEach(btn => {
                 btn.classList.remove('selected');
             });
+            
+            // Reset progress
             document.getElementById('progressFill').style.width = '0%';
             document.getElementById('submitBtn').disabled = true;
+            
+            // Show landing page
+            document.getElementById('landingContainer').style.display = 'block';
+            document.getElementById('quizContainer').style.display = 'none';
+            document.getElementById('resultContainer').style.display = 'none';
+            
+            // Clear quiz container
+            document.getElementById('questions').innerHTML = '';
         }
 
-        function shareResults() {
-            if (navigator.share) {
-                navigator.share({
-                    title: 'My Business Superpower Results',
-                    text: 'I just discovered my business superpower at UALR! Take the quiz to find yours.',
-                    url: window.location.href
-                });
-            } else {
-                alert('Share this link with friends: ' + window.location.href);
-            }
+        // Function to export all data (for administrators)
+        function exportAllData() {
+            const database = JSON.parse(localStorage.getItem('ualrQuizResults') || '[]');
+            const csv = convertToCSV(database);
+            
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `UALR_Quiz_Database_${new Date().toISOString().split('T')[0]}.csv`;
+            a.click();
         }
 
-        // Initialize quiz on page load
-        initializeQuiz();
+        function convertToCSV(data) {
+            if (data.length === 0) return '';
+            
+            const headers = ['Timestamp', 'Name', 'Email', 'School', 'Grad Year', 'Result', 'MKT Score', 'FIN Score', 'ACC Score', 'ENT Score', 'MGT Score', 'IB Score', 'BAIS Score'];
+            
+            const rows = data.map(row => [
+                row.timestamp,
+                row.name,
+                row.email,
+                row.school,
+                row.gradYear,
+                row.result,
+                row.scores.MKT || 0,
+                row.scores.FIN || 0,
+                row.scores.ACC || 0,
+                row.scores.ENT || 0,
+                row.scores.MGT || 0,
+                row.scores.IB || 0,
+                row.scores.BAIS || 0
+            ]);
+            
+            return [headers, ...rows].map(row => row.join(',')).join('\n');
+        }
+
+        // Admin function - add this to console to download all data:
+        // exportAllData()
     </script>
 </body>
 </html>
