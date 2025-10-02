@@ -628,7 +628,7 @@
                 roleModel: "David Ogilvy (Advertising Legend)",
                 description: "You think like a customer, love creative campaigns, and enjoy influencing",
                 path: "B.B.A. in Marketing with focus on advertising, digital marketing, and professional sales",
-                professor: "Dr. David Gilliam or Dr. Casey Rockwell",
+                professor: "Dr. Seunghyun Kim",
                 strengths: ["Empathy for customers", "Creative ideation", "Persuasive communication"],
                 weaknesses: ["May over-index on ideas vs. data", "Need to balance creativity with analytics"],
                 opportunities: ["Digital Marketing Certificate", "Professional Sales Competition", "Marketing Club Leadership"],
@@ -654,7 +654,7 @@
                 roleModel: "Mary T. Barra (GM CEO - precision + execution)",
                 description: "You notice errors, love accuracy, and want to speak the language of business",
                 path: "B.B.A. in Accounting - CPA aligned, available online",
-                professor: "Dr. Mark Funk",
+                professor: "Dr. John Hall",
                 strengths: ["Accuracy obsession", "Compliance mindset", "Process discipline"],
                 weaknesses: ["Perfectionism", "Slower decision-making"],
                 opportunities: ["CPA Prep Program", "Big 4 Recruiting", "Accounting Society"],
@@ -667,7 +667,7 @@
                 roleModel: "Satya Nadella (Microsoft CEO)",
                 description: "You like turning data into insight and building smart systems",
                 path: "B.B.A. in Business Analytics or Business Information Systems (STEM)",
-                professor: "John Hall",
+                professor: "Dr. John Hall",
                 strengths: ["Data literacy", "Automation mindset", "Process improvement"],
                 weaknesses: ["Tech tunnel vision", "Need people skills"],
                 opportunities: ["STEM Designation Benefits", "Analytics Certificate", "Tech Consulting"],
@@ -680,7 +680,7 @@
                 roleModel: "Indra Nooyi / Sheryl Sandberg",
                 description: "You organize teams, drive execution, and develop people",
                 path: "B.B.A. in Management (General, HR, or Innovation & Entrepreneurship)",
-                professor: "Dr. Yue Zhao or Dr. Karen Leonard",
+                professor: "Dr. Yue Zhao",
                 strengths: ["Team building", "Execution focus", "Conflict resolution"],
                 weaknesses: ["Avoiding tough calls", "Scope creep"],
                 opportunities: ["Leadership Development Program", "HR Certificate", "Management Consulting"],
@@ -693,7 +693,7 @@
                 roleModel: "Indra Nooyi (global strategy expert)",
                 description: "You're curious about cultures and cross-border business",
                 path: "B.B.A. in International Business with field study experience",
-                professor: "Dr. Ashvin Vibhakar",
+                professor: "Dr. Yue Zhao",
                 strengths: ["Cultural agility", "Negotiation skills", "Macro perspective"],
                 weaknesses: ["Complexity overload", "Travel demands"],
                 opportunities: ["International Field Study", "Language Minor", "Global Trade Certificate"],
@@ -1040,18 +1040,35 @@ TIMESTAMP: ${new Date().toLocaleString()}
             });
         }
 
-        function emailResults() {
-            // Simulate sending email
-            document.getElementById('emailSuccess').style.display = 'block';
-            
-            // In production, this would trigger a backend email service
-            console.log('Sending email to:', userData.email);
-            
-            // Hide success message after 5 seconds
-            setTimeout(() => {
-                document.getElementById('emailSuccess').style.display = 'none';
-            }, 5000);
+       function emailResults() {
+    const profile = profiles[userData.result];
+    const WEB_APP_URL = 'YOUR_GOOGLE_SCRIPT_URL'; // Replace with your URL
+    
+    fetch(WEB_APP_URL, {
+        method: 'POST',
+        body: JSON.stringify({
+            email: userData.email,
+            name: userData.name,
+            result_title: profile.title,
+            role_model: profile.roleModel,
+            description: profile.description,
+            path: profile.path,
+            professor: profile.professor,
+            strengths: profile.strengths.join(', '),
+            opportunities: profile.opportunities.join(', '),
+            scores: `MKT: ${userData.scores.MKT}, FIN: ${userData.scores.FIN}...`
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            document.getElementById('emailSuccess').innerHTML = `✅ Results sent to ${userData.email}!`;
+        } else {
+            document.getElementById('emailSuccess').innerHTML = '❌ Email failed. Please download instead.';
         }
+        document.getElementById('emailSuccess').style.display = 'block';
+    });
+}
 
         function downloadResults() {
             // Create a text version of results
@@ -1173,3 +1190,4 @@ Contact: business@ualr.edu
     </script>
 </body>
 </html>
+
