@@ -628,7 +628,7 @@
                 roleModel: "David Ogilvy (Advertising Legend)",
                 description: "You think like a customer, love creative campaigns, and enjoy influencing",
                 path: "B.B.A. in Marketing with focus on advertising, digital marketing, and professional sales",
-                professor: "Dr. David Gilliam or Dr. Seunghyun Kim",
+                professor: "Dr. David Gilliam or Dr. Casey Rockwell",
                 strengths: ["Empathy for customers", "Creative ideation", "Persuasive communication"],
                 weaknesses: ["May over-index on ideas vs. data", "Need to balance creativity with analytics"],
                 opportunities: ["Digital Marketing Certificate", "Professional Sales Competition", "Marketing Club Leadership"],
@@ -667,7 +667,7 @@
                 roleModel: "Satya Nadella (Microsoft CEO)",
                 description: "You like turning data into insight and building smart systems",
                 path: "B.B.A. in Business Analytics or Business Information Systems (STEM)",
-                professor: "Dr. Connie Barber",
+                professor: "John Hall",
                 strengths: ["Data literacy", "Automation mindset", "Process improvement"],
                 weaknesses: ["Tech tunnel vision", "Need people skills"],
                 opportunities: ["STEM Designation Benefits", "Analytics Certificate", "Tech Consulting"],
@@ -693,7 +693,7 @@
                 roleModel: "Indra Nooyi (global strategy expert)",
                 description: "You're curious about cultures and cross-border business",
                 path: "B.B.A. in International Business with field study experience",
-                professor: "Dr. Yue Zhao",
+                professor: "Dr. Ashvin Vibhakar",
                 strengths: ["Cultural agility", "Negotiation skills", "Macro perspective"],
                 weaknesses: ["Complexity overload", "Travel demands"],
                 opportunities: ["International Field Study", "Language Minor", "Global Trade Certificate"],
@@ -976,28 +976,68 @@
         }
 
         function saveToDatabase() {
-            // Get existing data or initialize empty array
+            // Save to localStorage as backup
             let database = JSON.parse(localStorage.getItem('ualrQuizResults') || '[]');
-            
-            // Add new entry
             database.push(userData);
-            
-            // Save back to localStorage
             localStorage.setItem('ualrQuizResults', JSON.stringify(database));
             
-            // In production, you would send this to a real backend
-            console.log('Data saved:', userData);
+            // Google Form submission
+            const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLScwysjoOG2Spp7mQS4EydVFiXDYd7iV1c_tz33rg_kOWzkDpA/formResponse';
             
-            // Example of sending to a backend (uncomment when you have an endpoint):
-            /*
-            fetch('YOUR_BACKEND_ENDPOINT/api/quiz-results', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(userData)
+            // Build detailed results for submission
+            const profile = profiles[userData.result];
+            const fullResults = `
+RESULT: ${profile.title}
+ROLE MODEL: ${profile.roleModel}
+RECOMMENDED PATH: ${profile.path}
+PROFESSOR TO CONTACT: ${profile.professor}
+
+SCORES BREAKDOWN:
+Marketing: ${userData.scores.MKT}
+Finance: ${userData.scores.FIN}
+Accounting: ${userData.scores.ACC}
+Entrepreneurship: ${userData.scores.ENT}
+Management: ${userData.scores.MGT}
+International Business: ${userData.scores.IB}
+Business Analytics: ${userData.scores.BAIS}
+
+TIMESTAMP: ${new Date().toLocaleString()}
+            `.trim();
+            
+            // Submit to Google Forms with your actual entry IDs
+            const formData = new URLSearchParams({
+                'entry.213989308': userData.name,           // Name
+                'entry.1044424052': userData.email,         // Email
+                'entry.1804933076': userData.school || '',  // School (optional)
+                'entry.12099343': userData.gradYear || '',  // Graduation Year (optional)
+                'entry.1012251372': userData.result,        // Quiz Result (MKT, FIN, etc.)
+                'entry.1869280281': fullResults            // Full detailed results
             });
-            */
+            
+            // Submit to Google Forms
+            fetch(GOOGLE_FORM_URL, {
+                method: 'POST',
+                mode: 'no-cors', // Important: Google Forms requires no-cors mode
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: formData.toString()
+            }).then(() => {
+                console.log('Data submitted to Google Forms successfully!');
+                console.log('Check your responses at: https://docs.google.com/forms/d/1FAIpQLScwysjoOG2Spp7mQS4EydVFiXDYd7iV1c_tz33rg_kOWzkDpA/edit#responses');
+            }).catch(error => {
+                console.error('Error submitting to Google Forms:', error);
+                // Data is still saved in localStorage as backup
+            });
+            
+            console.log('Data being sent:', {
+                name: userData.name,
+                email: userData.email,
+                school: userData.school,
+                gradYear: userData.gradYear,
+                result: userData.result,
+                scores: userData.scores
+            });
         }
 
         function emailResults() {
