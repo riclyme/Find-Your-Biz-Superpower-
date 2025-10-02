@@ -652,7 +652,7 @@
                 roleModel: "Warren Buffett",
                 description: "You're drawn to markets, valuation, and smart risk-taking",
                 path: "B.B.A. in Finance (General, Financial Services & Risk Management, or Real Estate)",
-                professor: "Dr. Gaurav Kumar",
+                professor: "Dr. John Hall",
                 strengths: ["Quantitative rigor", "Risk awareness", "Long-term thinking"],
                 weaknesses: ["Analysis paralysis", "Need storytelling skills"],
                 opportunities: ["Investment Club", "Bloomberg Terminal Training", "Finance Internships"],
@@ -665,7 +665,7 @@
                 roleModel: "Mary T. Barra (GM CEO - precision + execution)",
                 description: "You notice errors, love accuracy, and want to speak the language of business",
                 path: "B.B.A. in Accounting - CPA aligned, available online",
-                professor: "Dr. John Hall",
+                professor: "Dr. John Hall and Dr. Gaurav Kumar",
                 strengths: ["Accuracy obsession", "Compliance mindset", "Process discipline"],
                 weaknesses: ["Perfectionism", "Slower decision-making"],
                 opportunities: ["CPA Prep Program", "Big 4 Recruiting", "Accounting Society"],
@@ -678,7 +678,7 @@
                 roleModel: "Satya Nadella (Microsoft CEO)",
                 description: "You like turning data into insight and building smart systems",
                 path: "B.B.A. in Business Analytics or Business Information Systems (STEM designation)",
-                professor: "Dr. John Hall",
+                professor: "Dr. Yue Zhao",
                 strengths: ["Data literacy", "Automation mindset", "Process improvement"],
                 weaknesses: ["Tech tunnel vision", "Need people skills"],
                 opportunities: ["STEM Designation Benefits", "Analytics Certificate", "Tech Consulting"],
@@ -1101,7 +1101,12 @@ TIMESTAMP: ${new Date().toLocaleString()}
         }
 
         function downloadResults() {
-            // Using jsPDF library that we included in the header
+            // Check if jsPDF is loaded
+            if (typeof window.jspdf === 'undefined') {
+                alert('PDF library is loading. Please try again in a moment.');
+                return;
+            }
+            
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
             const profile = profiles[userData.result];
@@ -1110,92 +1115,163 @@ TIMESTAMP: ${new Date().toLocaleString()}
             doc.setTextColor(107, 15, 26);
             
             // Add UALR header
-            doc.setFontSize(24);
+            doc.setFontSize(22);
+            doc.setFont(undefined, 'bold');
             doc.text('UALR SCHOOL OF BUSINESS', 105, 20, { align: 'center' });
             
-            doc.setFontSize(18);
-            doc.text('Your Business Superpower Results', 105, 35, { align: 'center' });
+            doc.setFontSize(16);
+            doc.setFont(undefined, 'normal');
+            doc.text('Business Superpower Assessment Results', 105, 32, { align: 'center' });
             
             // Add a line
             doc.setDrawColor(192, 192, 192);
-            doc.line(20, 40, 190, 40);
+            doc.line(20, 38, 190, 38);
             
             // Personal info
             doc.setTextColor(0, 0, 0);
+            doc.setFontSize(11);
+            doc.text(`Student: ${userData.name}`, 20, 50);
+            doc.text(`Email: ${userData.email}`, 20, 57);
+            doc.text(`Assessment Date: ${new Date(userData.timestamp).toLocaleDateString()}`, 20, 64);
+            
+            // Result section with background
+            doc.setFillColor(107, 15, 26);
+            doc.rect(15, 72, 180, 25, 'F');
+            
+            doc.setTextColor(255, 255, 255);
+            doc.setFontSize(18);
+            doc.setFont(undefined, 'bold');
+            doc.text(`YOUR SUPERPOWER: ${profile.title.toUpperCase()}`, 105, 85, { align: 'center' });
+            
             doc.setFontSize(12);
-            doc.text(`Name: ${userData.name}`, 20, 55);
-            doc.text(`Date: ${new Date(userData.timestamp).toLocaleDateString()}`, 20, 62);
-            
-            // Result section
-            doc.setTextColor(107, 15, 26);
-            doc.setFontSize(20);
-            doc.text(`${profile.icon} ${profile.title}`, 105, 80, { align: 'center' });
-            
-            doc.setFontSize(14);
-            doc.setTextColor(60, 60, 60);
-            doc.text(`You could be the next ${profile.roleModel}`, 105, 90, { align: 'center' });
+            doc.setFont(undefined, 'normal');
+            doc.text(`Role Model: ${profile.roleModel}`, 105, 93, { align: 'center' });
             
             // Description
             doc.setTextColor(0, 0, 0);
             doc.setFontSize(11);
             const descLines = doc.splitTextToSize(profile.description, 170);
-            doc.text(descLines, 20, 105);
+            doc.text(descLines, 20, 108);
             
             // Recommended Path
             doc.setTextColor(107, 15, 26);
-            doc.setFontSize(13);
-            doc.text('YOUR RECOMMENDED PATH AT UALR:', 20, 125);
+            doc.setFontSize(12);
+            doc.setFont(undefined, 'bold');
+            doc.text('RECOMMENDED ACADEMIC PATH:', 20, 125);
             
             doc.setTextColor(0, 0, 0);
-            doc.setFontSize(11);
+            doc.setFontSize(10);
+            doc.setFont(undefined, 'normal');
             const pathLines = doc.splitTextToSize(profile.path, 170);
-            doc.text(pathLines, 20, 135);
+            doc.text(pathLines, 20, 133);
             
-            // Professor Contact
+            // Faculty Contact
             doc.setTextColor(107, 15, 26);
-            doc.setFontSize(13);
-            doc.text('CONNECT WITH:', 20, 155);
+            doc.setFontSize(12);
+            doc.setFont(undefined, 'bold');
+            doc.text('FACULTY ADVISOR:', 20, 148);
             
             doc.setTextColor(0, 0, 0);
-            doc.setFontSize(11);
-            doc.text(profile.professor, 20, 165);
+            doc.setFontSize(10);
+            doc.setFont(undefined, 'normal');
+            doc.text(profile.professor, 20, 156);
             
             // SWOT Analysis
             doc.setTextColor(107, 15, 26);
-            doc.setFontSize(14);
-            doc.text('YOUR SWOT ANALYSIS:', 20, 180);
+            doc.setFontSize(13);
+            doc.setFont(undefined, 'bold');
+            doc.text('PERSONALIZED SWOT ANALYSIS', 20, 170);
             
+            // Strengths
             doc.setFontSize(11);
-            doc.setTextColor(0, 128, 0);
-            doc.text('STRENGTHS:', 20, 190);
+            doc.setTextColor(40, 167, 69);
+            doc.setFont(undefined, 'bold');
+            doc.text('Strengths:', 20, 180);
             doc.setTextColor(0, 0, 0);
-            const strengthLines = doc.splitTextToSize(profile.strengths.join(', '), 170);
-            doc.text(strengthLines, 20, 197);
+            doc.setFont(undefined, 'normal');
+            doc.setFontSize(10);
+            const strengthText = doc.splitTextToSize('• ' + profile.strengths.join(' • '), 85);
+            doc.text(strengthText, 20, 187);
             
-            doc.setTextColor(255, 140, 0);
-            doc.text('OPPORTUNITIES:', 20, 210);
+            // Opportunities  
+            doc.setTextColor(23, 162, 184);
+            doc.setFont(undefined, 'bold');
+            doc.setFontSize(11);
+            doc.text('Opportunities:', 110, 180);
             doc.setTextColor(0, 0, 0);
-            const oppLines = doc.splitTextToSize(profile.opportunities.join(', '), 170);
-            doc.text(oppLines, 20, 217);
+            doc.setFont(undefined, 'normal');
+            doc.setFontSize(10);
+            const oppText = doc.splitTextToSize('• ' + profile.opportunities.join(' • '), 85);
+            doc.text(oppText, 110, 187);
+            
+            // Weaknesses
+            doc.setTextColor(255, 193, 7);
+            doc.setFont(undefined, 'bold');
+            doc.setFontSize(11);
+            doc.text('Areas to Develop:', 20, 215);
+            doc.setTextColor(0, 0, 0);
+            doc.setFont(undefined, 'normal');
+            doc.setFontSize(10);
+            const weakText = doc.splitTextToSize('• ' + profile.weaknesses.join(' • '), 85);
+            doc.text(weakText, 20, 222);
+            
+            // Threats
+            doc.setTextColor(220, 53, 69);
+            doc.setFont(undefined, 'bold');
+            doc.setFontSize(11);
+            doc.text('Challenges to Prepare For:', 110, 215);
+            doc.setTextColor(0, 0, 0);
+            doc.setFont(undefined, 'normal');
+            doc.setFontSize(10);
+            const threatText = doc.splitTextToSize('• ' + profile.threats.join(' • '), 85);
+            doc.text(threatText, 110, 222);
             
             // Score breakdown
+            doc.setDrawColor(192, 192, 192);
+            doc.line(20, 245, 190, 245);
+            
             doc.setTextColor(107, 15, 26);
-            doc.setFontSize(12);
-            doc.text('DETAILED SCORES:', 20, 235);
+            doc.setFontSize(11);
+            doc.setFont(undefined, 'bold');
+            doc.text('ASSESSMENT SCORES:', 20, 253);
             
             doc.setFontSize(10);
             doc.setTextColor(0, 0, 0);
-            doc.text(`Marketing: ${userData.scores.MKT} | Finance: ${userData.scores.FIN} | Accounting: ${userData.scores.ACC}`, 20, 245);
-            doc.text(`Entrepreneurship: ${userData.scores.ENT} | Management: ${userData.scores.MGT}`, 20, 252);
-            doc.text(`International Business: ${userData.scores.IB} | Business Analytics: ${userData.scores.BAIS}`, 20, 259);
+            doc.setFont(undefined, 'normal');
+            
+            // Create a simple table for scores
+            let yPos = 260;
+            const scores = [
+                `Marketing & Sales: ${userData.scores.MKT}`,
+                `Finance & Investing: ${userData.scores.FIN}`,
+                `Accounting: ${userData.scores.ACC}`,
+                `Business Analytics/IS: ${userData.scores.BAIS}`,
+                `Management & HR: ${userData.scores.MGT}`,
+                `International Business: ${userData.scores.IB}`,
+                `Entrepreneurship: ${userData.scores.ENT}`
+            ];
+            
+            scores.forEach((score, index) => {
+                if (index % 2 === 0) {
+                    doc.text(score, 30, yPos);
+                } else {
+                    doc.text(score, 110, yPos - 5);
+                    yPos += 5;
+                }
+            });
             
             // Footer
-            doc.setTextColor(107, 15, 26);
-            doc.setFontSize(10);
-            doc.text('Next Steps: Visit ualr.edu/business | Contact admissions@ualr.edu', 105, 280, { align: 'center' });
+            doc.setFillColor(107, 15, 26);
+            doc.rect(0, 280, 210, 17, 'F');
+            
+            doc.setTextColor(255, 255, 255);
+            doc.setFontSize(9);
+            doc.text('NEXT STEPS: Visit ualr.edu/business | Email: business@ualr.edu | Phone: (501) 569-3356', 105, 288, { align: 'center' });
+            doc.text('Schedule a campus tour at ualr.edu/admissions/visit', 105, 293, { align: 'center' });
             
             // Save the PDF
-            doc.save(`UALR_Business_Superpower_${userData.name.replace(/\s+/g, '_')}.pdf`);
+            const fileName = `UALR_Business_Superpower_${userData.name.replace(/\s+/g, '_')}_${new Date().toISOString().split('T')[0]}.pdf`;
+            doc.save(fileName);
         }
 
         function retakeQuiz() {
