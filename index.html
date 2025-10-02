@@ -13,7 +13,7 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #6B0F1A 0%, #8B1F2A 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -32,21 +32,24 @@
         }
 
         .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #6B0F1A 0%, #8B1F2A 100%);
             color: white;
             padding: 30px;
             text-align: center;
+            border-bottom: 5px solid #C0C0C0;
         }
 
         .header h1 {
             font-size: 2em;
             margin-bottom: 10px;
             animation: fadeInDown 0.8s ease;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
         .header p {
             font-size: 1.1em;
             opacity: 0.95;
+            color: #C0C0C0;
         }
 
         /* Landing Page Styles */
@@ -141,15 +144,15 @@
         }
 
         .privacy-box {
-            background: #f0f4ff;
-            border: 2px solid #d0d8ff;
+            background: #FFF0F0;
+            border: 2px solid #6B0F1A;
             border-radius: 10px;
             padding: 20px;
             margin-bottom: 20px;
         }
 
         .privacy-box h4 {
-            color: #667eea;
+            color: #6B0F1A;
             margin-bottom: 10px;
             font-size: 1.1em;
         }
@@ -225,7 +228,7 @@
 
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, #667eea, #764ba2);
+            background: linear-gradient(90deg, #6B0F1A, #8B1F2A);
             border-radius: 10px;
             transition: width 0.3s ease;
             width: 0%;
@@ -285,19 +288,19 @@
 
         .rating-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
-            border-color: #667eea;
+            box-shadow: 0 5px 15px rgba(107, 15, 26, 0.3);
+            border-color: #6B0F1A;
         }
 
         .rating-btn.selected {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #6B0F1A 0%, #8B1F2A 100%);
             color: white;
             border-color: transparent;
             transform: scale(1.1);
         }
 
         .submit-btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #6B0F1A 0%, #8B1F2A 100%);
             color: white;
             border: none;
             padding: 15px 40px;
@@ -307,12 +310,12 @@
             margin: 30px auto;
             display: block;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 4px 15px rgba(107, 15, 26, 0.4);
         }
 
         .submit-btn:hover:not(:disabled) {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+            box-shadow: 0 6px 20px rgba(107, 15, 26, 0.6);
         }
 
         .submit-btn:disabled {
@@ -362,7 +365,7 @@
         }
 
         .result-details h3 {
-            color: #667eea;
+            color: #6B0F1A;
             margin-bottom: 15px;
             font-size: 1.3em;
         }
@@ -424,20 +427,20 @@
         }
 
         .action-btn.primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #6B0F1A 0%, #8B1F2A 100%);
             color: white;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 4px 15px rgba(107, 15, 26, 0.3);
         }
 
         .action-btn.secondary {
             background: white;
-            color: #667eea;
-            border: 2px solid #667eea;
+            color: #6B0F1A;
+            border: 2px solid #6B0F1A;
         }
 
         .action-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 6px 20px rgba(107, 15, 26, 0.4);
         }
 
         /* Success message */
@@ -588,6 +591,14 @@
         <div id="resultContainer" class="result-container"></div>
     </div>
 
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            // Initialize EmailJS with your public key
+            emailjs.init("YOUR_EMAILJS_PUBLIC_KEY"); // Replace with your actual public key
+        })();
+    </script>
     <script>
         // Store user data
         let userData = {
@@ -666,7 +677,7 @@
                 icon: "💻",
                 roleModel: "Satya Nadella (Microsoft CEO)",
                 description: "You like turning data into insight and building smart systems",
-                path: "B.B.A. in Business Analytics or Business Information Systems (STEM)",
+                path: "B.B.A. in Business Analytics or Business Information Systems (STEM designation)",
                 professor: "Dr. John Hall",
                 strengths: ["Data literacy", "Automation mindset", "Process improvement"],
                 weaknesses: ["Tech tunnel vision", "Need people skills"],
@@ -679,7 +690,7 @@
                 icon: "👥",
                 roleModel: "Indra Nooyi / Sheryl Sandberg",
                 description: "You organize teams, drive execution, and develop people",
-                path: "B.B.A. in Management (General, HR, or Innovation & Entrepreneurship)",
+                path: "B.B.A. in Management (General, HR, or Innovation & Entrepreneurship concentrations)",
                 professor: "Dr. Yue Zhao",
                 strengths: ["Team building", "Execution focus", "Conflict resolution"],
                 weaknesses: ["Avoiding tough calls", "Scope creep"],
@@ -692,7 +703,7 @@
                 icon: "🌍",
                 roleModel: "Indra Nooyi (global strategy expert)",
                 description: "You're curious about cultures and cross-border business",
-                path: "B.B.A. in International Business with field study experience",
+                path: "B.B.A. in International Business with field study experience and language proficiency",
                 professor: "Dr. Yue Zhao",
                 strengths: ["Cultural agility", "Negotiation skills", "Macro perspective"],
                 weaknesses: ["Complexity overload", "Travel demands"],
@@ -705,7 +716,7 @@
                 icon: "🚀",
                 roleModel: "Sara Blakely / Daymond John",
                 description: "You love to launch, test, and iterate on new ideas",
-                path: "Innovation & Entrepreneurship emphasis in Management B.B.A.",
+                path: "Innovation & Entrepreneurship concentration in Management B.B.A.",
                 professor: "Dr. Yue Zhao",
                 strengths: ["Initiative", "Resilience", "Bias for action"],
                 weaknesses: ["Impulsiveness", "Resource constraints"],
@@ -962,7 +973,7 @@
                         🔄 Retake Quiz
                     </button>
                     <button class="action-btn primary" onclick="downloadResults()">
-                        📥 Download PDF
+                        📥 Download PDF Report
                     </button>
                 </div>
                 
@@ -1040,78 +1051,151 @@ TIMESTAMP: ${new Date().toLocaleString()}
             });
         }
 
-       function emailResults() {
-    const profile = profiles[userData.result];
-    const WEB_APP_URL = 'YOUR_GOOGLE_SCRIPT_URL'; // Replace with your URL
-    
-    fetch(WEB_APP_URL, {
-        method: 'POST',
-        body: JSON.stringify({
-            email: userData.email,
-            name: userData.name,
-            result_title: profile.title,
-            role_model: profile.roleModel,
-            description: profile.description,
-            path: profile.path,
-            professor: profile.professor,
-            strengths: profile.strengths.join(', '),
-            opportunities: profile.opportunities.join(', '),
-            scores: `MKT: ${userData.scores.MKT}, FIN: ${userData.scores.FIN}...`
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            document.getElementById('emailSuccess').innerHTML = `✅ Results sent to ${userData.email}!`;
-        } else {
-            document.getElementById('emailSuccess').innerHTML = '❌ Email failed. Please download instead.';
+        function emailResults() {
+            // Check if EmailJS is configured
+            if (typeof emailjs === 'undefined') {
+                alert('Email service is being configured. For now, you can take a screenshot of your results or use the download option.');
+                return;
+            }
+            
+            const profile = profiles[userData.result];
+            
+            // Prepare email parameters
+            const emailParams = {
+                to_email: userData.email,
+                student_name: userData.name,
+                result_title: profile.title,
+                role_model: profile.roleModel,
+                result_description: profile.description,
+                recommended_path: profile.path,
+                professor_contact: profile.professor,
+                strengths: profile.strengths.join(', '),
+                opportunities: profile.opportunities.join(', '),
+                weaknesses: profile.weaknesses.join(', '),
+                threats: profile.threats.join(', '),
+                leadership_style: profile.leadership,
+                score_breakdown: `Marketing: ${userData.scores.MKT}, Finance: ${userData.scores.FIN}, Accounting: ${userData.scores.ACC}, Entrepreneurship: ${userData.scores.ENT}, Management: ${userData.scores.MGT}, International Business: ${userData.scores.IB}, Business Analytics: ${userData.scores.BAIS}`
+            };
+            
+            // Show loading state
+            document.getElementById('emailSuccess').innerHTML = '⏳ Sending your results...';
+            document.getElementById('emailSuccess').style.display = 'block';
+            
+            // Send email using EmailJS
+            // Replace these with your actual EmailJS credentials
+            emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', emailParams)
+                .then(function(response) {
+                    console.log('Email sent successfully!', response.status, response.text);
+                    document.getElementById('emailSuccess').innerHTML = `✅ Results sent to ${userData.email}! Check your inbox (and spam folder).`;
+                    document.getElementById('emailSuccess').style.display = 'block';
+                    
+                    // Hide success message after 5 seconds
+                    setTimeout(() => {
+                        document.getElementById('emailSuccess').style.display = 'none';
+                    }, 5000);
+                }, function(error) {
+                    console.error('Failed to send email:', error);
+                    document.getElementById('emailSuccess').innerHTML = '❌ Email failed. Please try the download option instead.';
+                    document.getElementById('emailSuccess').style.display = 'block';
+                });
         }
-        document.getElementById('emailSuccess').style.display = 'block';
-    });
-}
 
         function downloadResults() {
-            // Create a text version of results
+            // Using jsPDF library that we included in the header
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
             const profile = profiles[userData.result];
-            const resultText = `
-UALR Business Superpower Quiz Results
-======================================
-Name: ${userData.name}
-Date: ${new Date(userData.timestamp).toLocaleDateString()}
-
-YOUR BUSINESS SUPERPOWER: ${profile.title}
-Role Model: ${profile.roleModel}
-
-${profile.description}
-
-RECOMMENDED PATH AT UALR:
-${profile.path}
-
-CONNECT WITH:
-${profile.professor}
-
-YOUR SWOT ANALYSIS:
-Strengths: ${profile.strengths.join(', ')}
-Weaknesses: ${profile.weaknesses.join(', ')}
-Opportunities: ${profile.opportunities.join(', ')}
-Threats: ${profile.threats.join(', ')}
-
-Next Steps:
-1. Visit ualr.edu/business to learn more
-2. Connect with ${profile.professor}
-3. Schedule a campus tour
-4. Apply for scholarships
-
-Contact: business@ualr.edu
-            `;
             
-            // Create download
-            const blob = new Blob([resultText], { type: 'text/plain' });
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `UALR_Quiz_Results_${userData.name.replace(/\s+/g, '_')}.txt`;
-            a.click();
+            // UALR maroon color
+            doc.setTextColor(107, 15, 26);
+            
+            // Add UALR header
+            doc.setFontSize(24);
+            doc.text('UALR SCHOOL OF BUSINESS', 105, 20, { align: 'center' });
+            
+            doc.setFontSize(18);
+            doc.text('Your Business Superpower Results', 105, 35, { align: 'center' });
+            
+            // Add a line
+            doc.setDrawColor(192, 192, 192);
+            doc.line(20, 40, 190, 40);
+            
+            // Personal info
+            doc.setTextColor(0, 0, 0);
+            doc.setFontSize(12);
+            doc.text(`Name: ${userData.name}`, 20, 55);
+            doc.text(`Date: ${new Date(userData.timestamp).toLocaleDateString()}`, 20, 62);
+            
+            // Result section
+            doc.setTextColor(107, 15, 26);
+            doc.setFontSize(20);
+            doc.text(`${profile.icon} ${profile.title}`, 105, 80, { align: 'center' });
+            
+            doc.setFontSize(14);
+            doc.setTextColor(60, 60, 60);
+            doc.text(`You could be the next ${profile.roleModel}`, 105, 90, { align: 'center' });
+            
+            // Description
+            doc.setTextColor(0, 0, 0);
+            doc.setFontSize(11);
+            const descLines = doc.splitTextToSize(profile.description, 170);
+            doc.text(descLines, 20, 105);
+            
+            // Recommended Path
+            doc.setTextColor(107, 15, 26);
+            doc.setFontSize(13);
+            doc.text('YOUR RECOMMENDED PATH AT UALR:', 20, 125);
+            
+            doc.setTextColor(0, 0, 0);
+            doc.setFontSize(11);
+            const pathLines = doc.splitTextToSize(profile.path, 170);
+            doc.text(pathLines, 20, 135);
+            
+            // Professor Contact
+            doc.setTextColor(107, 15, 26);
+            doc.setFontSize(13);
+            doc.text('CONNECT WITH:', 20, 155);
+            
+            doc.setTextColor(0, 0, 0);
+            doc.setFontSize(11);
+            doc.text(profile.professor, 20, 165);
+            
+            // SWOT Analysis
+            doc.setTextColor(107, 15, 26);
+            doc.setFontSize(14);
+            doc.text('YOUR SWOT ANALYSIS:', 20, 180);
+            
+            doc.setFontSize(11);
+            doc.setTextColor(0, 128, 0);
+            doc.text('STRENGTHS:', 20, 190);
+            doc.setTextColor(0, 0, 0);
+            const strengthLines = doc.splitTextToSize(profile.strengths.join(', '), 170);
+            doc.text(strengthLines, 20, 197);
+            
+            doc.setTextColor(255, 140, 0);
+            doc.text('OPPORTUNITIES:', 20, 210);
+            doc.setTextColor(0, 0, 0);
+            const oppLines = doc.splitTextToSize(profile.opportunities.join(', '), 170);
+            doc.text(oppLines, 20, 217);
+            
+            // Score breakdown
+            doc.setTextColor(107, 15, 26);
+            doc.setFontSize(12);
+            doc.text('DETAILED SCORES:', 20, 235);
+            
+            doc.setFontSize(10);
+            doc.setTextColor(0, 0, 0);
+            doc.text(`Marketing: ${userData.scores.MKT} | Finance: ${userData.scores.FIN} | Accounting: ${userData.scores.ACC}`, 20, 245);
+            doc.text(`Entrepreneurship: ${userData.scores.ENT} | Management: ${userData.scores.MGT}`, 20, 252);
+            doc.text(`International Business: ${userData.scores.IB} | Business Analytics: ${userData.scores.BAIS}`, 20, 259);
+            
+            // Footer
+            doc.setTextColor(107, 15, 26);
+            doc.setFontSize(10);
+            doc.text('Next Steps: Visit ualr.edu/business | Contact admissions@ualr.edu', 105, 280, { align: 'center' });
+            
+            // Save the PDF
+            doc.save(`UALR_Business_Superpower_${userData.name.replace(/\s+/g, '_')}.pdf`);
         }
 
         function retakeQuiz() {
@@ -1190,4 +1274,3 @@ Contact: business@ualr.edu
     </script>
 </body>
 </html>
-
