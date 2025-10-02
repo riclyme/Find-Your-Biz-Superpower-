@@ -503,6 +503,10 @@
             }
         }
     </style>
+    
+    <!-- jsPDF Library - Free PDF Generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    
 </head>
 <body>
     <div class="container">
@@ -966,14 +970,14 @@
                 </div>
                 
                 <div class="action-buttons">
-                    <button class="action-btn primary" onclick="emailResults()">
+                    <button class="action-btn primary" onclick="emailResultsSimple()">
                         📧 Email My Results
                     </button>
                     <button class="action-btn secondary" onclick="retakeQuiz()">
                         🔄 Retake Quiz
                     </button>
-                    <button class="action-btn primary" onclick="downloadResults()">
-                        📥 Download PDF Report
+                    <button class="action-btn primary" onclick="downloadHTMLReport()">
+                        📥 Download Report
                     </button>
                 </div>
                 
@@ -1051,10 +1055,58 @@ TIMESTAMP: ${new Date().toLocaleString()}
             });
         }
 
-        function emailResults() {
-            // Simple mailto fallback that always works
+        function emailResultsSimple() {
             const profile = profiles[userData.result];
             
+            // Replace this with your Google Apps Script Web App URL
+            const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyklU0McCCQPeDnLDVXWiigqCRIH40GnpcmDTBX5JxrChhY1yievlON0l-EFivWTf9MpA/exec';
+            
+            // If Google Apps Script URL is configured, use it
+            if (GOOGLE_SCRIPT_URL && GOOGLE_SCRIPT_URL !== 'https://script.google.com/macros/s/AKfycbyklU0McCCQPeDnLDVXWiigqCRIH40GnpcmDTBX5JxrChhY1yievlON0l-EFivWTf9MpA/exec') {
+                // Prepare data for Google Apps Script
+                const emailData = {
+                    email: userData.email,
+                    name: userData.name,
+                    result_title: profile.title,
+                    role_model: profile.roleModel,
+                    path: profile.path,
+                    professor: profile.professor,
+                    strengths: profile.strengths.join(', '),
+                    opportunities: profile.opportunities.join(', '),
+                    scores: `Marketing: ${userData.scores.MKT}, Finance: ${userData.scores.FIN}, Accounting: ${userData.scores.ACC}, Business Analytics: ${userData.scores.BAIS}, Management: ${userData.scores.MGT}, International Business: ${userData.scores.IB}, Entrepreneurship: ${userData.scores.ENT}`
+                };
+                
+                // Show loading
+                document.getElementById('emailSuccess').innerHTML = '⏳ Sending email...';
+                document.getElementById('emailSuccess').style.display = 'block';
+                
+                // Send to Google Apps Script
+                fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(emailData)
+                })
+                .then(() => {
+                    document.getElementById('emailSuccess').innerHTML = `✅ Results sent to ${userData.email}!`;
+                    setTimeout(() => {
+                        document.getElementById('emailSuccess').style.display = 'none';
+                    }, 5000);
+                })
+                .catch(() => {
+                    // Fallback to mailto if Google Script fails
+                    openMailClient();
+                });
+            } else {
+                // Use mailto as fallback
+                openMailClient();
+            }
+        }
+        
+        function openMailClient() {
+            const profile = profiles[userData.result];
             const subject = encodeURIComponent('My UALR Business Superpower Results');
             const body = encodeURIComponent(`
 Hi! I just discovered my business superpower at UALR!
@@ -1064,17 +1116,11 @@ Role Model: ${profile.roleModel}
 
 ${profile.description}
 
-RECOMMENDED PATH:
-${profile.path}
+RECOMMENDED PATH: ${profile.path}
+FACULTY ADVISOR: ${profile.professor}
 
-FACULTY ADVISOR:
-${profile.professor}
-
-MY STRENGTHS:
-${profile.strengths.join(', ')}
-
-OPPORTUNITIES AT UALR:
-${profile.opportunities.join(', ')}
+MY STRENGTHS: ${profile.strengths.join(', ')}
+OPPORTUNITIES AT UALR: ${profile.opportunities.join(', ')}
 
 MY SCORES:
 Marketing: ${userData.scores.MKT}
@@ -1085,28 +1131,153 @@ Management: ${userData.scores.MGT}
 International Business: ${userData.scores.IB}
 Entrepreneurship: ${userData.scores.ENT}
 
-I'm interested in learning more about the ${profile.title} path at UALR!
-
 Best regards,
 ${userData.name}
             `);
             
-            // Open email client with pre-filled content
             window.location.href = `mailto:${userData.email}?subject=${subject}&body=${body}`;
-            
-            // Show success message
-            document.getElementById('emailSuccess').innerHTML = '✅ Opening your email app with results...';
+            document.getElementById('emailSuccess').innerHTML = '✅ Opening your email app...';
             document.getElementById('emailSuccess').style.display = 'block';
-            
             setTimeout(() => {
                 document.getElementById('emailSuccess').style.display = 'none';
             }, 5000);
         }
 
-        function downloadResults() {
+        function downloadHTMLReport() {
+            // Check if jsPDF is available
+            if (window.jspdf) {
+                // Generate PDF using jsPDF
+                generatePDF();
+            } else {
+                // Fallback to HTML download
+                downloadHTML();
+            }
+        }
+        
+        function generatePDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
             const profile = profiles[userData.result];
             
-            // Create a formatted HTML document that can be saved
+            // Set fonts and colors
+            doc.setFont("helvetica");
+            
+            // Header with UALR branding
+            doc.setFillColor(107, 15, 26);
+            doc.rect(0, 0, 210, 40, 'F');
+            
+            doc.setTextColor(255, 255, 255);
+            doc.setFontSize(24);
+            doc.text('UALR SCHOOL OF BUSINESS', 105, 20, { align: 'center' });
+            doc.setFontSize(14);
+            doc.text('Business Superpower Assessment Results', 105, 32, { align: 'center' });
+            
+            // Personal Info
+            doc.setTextColor(0, 0, 0);
+            doc.setFontSize(12);
+            doc.text(`Student: ${userData.name}`, 20, 55);
+            doc.text(`Email: ${userData.email}`, 20, 62);
+            doc.text(`Date: ${new Date().toLocaleDateString()}`, 20, 69);
+            
+            // Result Section
+            doc.setFillColor(240, 240, 240);
+            doc.rect(15, 78, 180, 30, 'F');
+            
+            doc.setTextColor(107, 15, 26);
+            doc.setFontSize(18);
+            doc.text(profile.title.toUpperCase(), 105, 90, { align: 'center' });
+            doc.setFontSize(12);
+            doc.setTextColor(80, 80, 80);
+            doc.text(`Role Model: ${profile.roleModel}`, 105, 100, { align: 'center' });
+            
+            // Description
+            doc.setTextColor(0, 0, 0);
+            doc.setFontSize(11);
+            const lines = doc.splitTextToSize(profile.description, 170);
+            doc.text(lines, 20, 120);
+            
+            // Path & Professor
+            doc.setTextColor(107, 15, 26);
+            doc.setFontSize(12);
+            doc.setFont("helvetica", "bold");
+            doc.text('RECOMMENDED PATH:', 20, 140);
+            doc.setFont("helvetica", "normal");
+            doc.setTextColor(0, 0, 0);
+            doc.setFontSize(10);
+            const pathLines = doc.splitTextToSize(profile.path, 170);
+            doc.text(pathLines, 20, 148);
+            
+            doc.setTextColor(107, 15, 26);
+            doc.setFontSize(12);
+            doc.setFont("helvetica", "bold");
+            doc.text('FACULTY ADVISOR:', 20, 165);
+            doc.setFont("helvetica", "normal");
+            doc.setTextColor(0, 0, 0);
+            doc.setFontSize(10);
+            doc.text(profile.professor, 20, 173);
+            
+            // SWOT Analysis
+            doc.setTextColor(107, 15, 26);
+            doc.setFontSize(14);
+            doc.setFont("helvetica", "bold");
+            doc.text('SWOT ANALYSIS', 105, 188, { align: 'center' });
+            
+            // Strengths & Opportunities (left side)
+            doc.setFont("helvetica", "normal");
+            doc.setTextColor(40, 167, 69);
+            doc.setFontSize(11);
+            doc.text('Strengths:', 20, 200);
+            doc.setTextColor(0, 0, 0);
+            doc.setFontSize(9);
+            let yPos = 207;
+            profile.strengths.forEach(s => {
+                doc.text(`• ${s}`, 20, yPos);
+                yPos += 5;
+            });
+            
+            // Opportunities (right side)
+            doc.setTextColor(23, 162, 184);
+            doc.setFontSize(11);
+            doc.text('Opportunities:', 110, 200);
+            doc.setTextColor(0, 0, 0);
+            doc.setFontSize(9);
+            yPos = 207;
+            profile.opportunities.forEach(o => {
+                const lines = doc.splitTextToSize(`• ${o}`, 85);
+                doc.text(lines, 110, yPos);
+                yPos += lines.length * 5;
+            });
+            
+            // Scores Section
+            doc.setDrawColor(192, 192, 192);
+            doc.line(20, 235, 190, 235);
+            
+            doc.setTextColor(107, 15, 26);
+            doc.setFontSize(12);
+            doc.setFont("helvetica", "bold");
+            doc.text('ASSESSMENT SCORES', 105, 245, { align: 'center' });
+            
+            doc.setFont("helvetica", "normal");
+            doc.setTextColor(0, 0, 0);
+            doc.setFontSize(10);
+            doc.text(`Marketing: ${userData.scores.MKT}     Finance: ${userData.scores.FIN}     Accounting: ${userData.scores.ACC}`, 105, 255, { align: 'center' });
+            doc.text(`Management: ${userData.scores.MGT}     International Business: ${userData.scores.IB}`, 105, 262, { align: 'center' });
+            doc.text(`Business Analytics: ${userData.scores.BAIS}     Entrepreneurship: ${userData.scores.ENT}`, 105, 269, { align: 'center' });
+            
+            // Footer
+            doc.setFillColor(107, 15, 26);
+            doc.rect(0, 280, 210, 20, 'F');
+            doc.setTextColor(255, 255, 255);
+            doc.setFontSize(10);
+            doc.text('Visit: ualr.edu/business | Email: business@ualr.edu | Call: (501) 569-3356', 105, 290, { align: 'center' });
+            
+            // Save PDF
+            doc.save(`UALR_Business_Superpower_${userData.name.replace(/\s+/g, '_')}.pdf`);
+        }
+        
+        function downloadHTML() {
+            // Fallback HTML download (previous implementation)
+            const profile = profiles[userData.result];
             const htmlContent = `
 <!DOCTYPE html>
 <html>
@@ -1114,162 +1285,37 @@ ${userData.name}
     <meta charset="UTF-8">
     <title>UALR Business Superpower - ${userData.name}</title>
     <style>
-        body { 
-            font-family: Arial, sans-serif; 
-            max-width: 800px; 
-            margin: 0 auto; 
-            padding: 20px;
-            color: #333;
-        }
-        .header { 
-            background: #6B0F1A; 
-            color: white; 
-            padding: 20px; 
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        .section { 
-            margin: 20px 0; 
-            padding: 15px;
-            background: #f5f5f5;
-            border-left: 4px solid #6B0F1A;
-        }
-        .title { 
-            color: #6B0F1A; 
-            font-size: 24px; 
-            margin: 20px 0;
-            text-align: center;
-        }
-        .swot-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-top: 20px;
-        }
-        .swot-box {
-            padding: 10px;
-            background: white;
-            border-radius: 5px;
-        }
-        .swot-box h3 {
-            margin-top: 0;
-            font-size: 14px;
-            text-transform: uppercase;
-        }
-        .strength { border-left: 3px solid #28a745; }
-        .weakness { border-left: 3px solid #ffc107; }
-        .opportunity { border-left: 3px solid #17a2b8; }
-        .threat { border-left: 3px solid #dc3545; }
-        @media print {
-            body { margin: 0; padding: 10px; }
-            .no-print { display: none; }
-        }
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .header { background: #6B0F1A; color: white; padding: 20px; text-align: center; }
+        .section { margin: 20px 0; padding: 15px; background: #f5f5f5; border-left: 4px solid #6B0F1A; }
+        @media print { .no-print { display: none; } }
     </style>
 </head>
 <body>
     <div class="header">
         <h1>UALR SCHOOL OF BUSINESS</h1>
-        <h2>Business Superpower Assessment Results</h2>
+        <h2>Business Superpower Results</h2>
     </div>
-    
-    <p><strong>Student:</strong> ${userData.name}</p>
-    <p><strong>Email:</strong> ${userData.email}</p>
-    <p><strong>Date:</strong> ${new Date(userData.timestamp).toLocaleDateString()}</p>
-    
-    <div class="title">
-        ${profile.icon} YOUR SUPERPOWER: ${profile.title.toUpperCase()}
-    </div>
-    
-    <p style="text-align: center; font-style: italic;">You could be the next ${profile.roleModel}</p>
-    
+    <p><strong>${userData.name}</strong> - ${new Date().toLocaleDateString()}</p>
+    <h2>${profile.title}</h2>
+    <p>${profile.description}</p>
     <div class="section">
-        <h3 style="color: #6B0F1A;">About You:</h3>
-        <p>${profile.description}</p>
+        <h3>Path:</h3> ${profile.path}
+        <h3>Advisor:</h3> ${profile.professor}
     </div>
-    
-    <div class="section">
-        <h3 style="color: #6B0F1A;">Your Recommended Path at UALR:</h3>
-        <p>${profile.path}</p>
-    </div>
-    
-    <div class="section">
-        <h3 style="color: #6B0F1A;">Faculty Advisor:</h3>
-        <p>${profile.professor}</p>
-        <p>Contact the UALR School of Business at (501) 569-3356 to schedule a meeting.</p>
-    </div>
-    
-    <div class="section">
-        <h3 style="color: #6B0F1A;">Your SWOT Analysis:</h3>
-        <div class="swot-grid">
-            <div class="swot-box strength">
-                <h3 style="color: #28a745;">Strengths</h3>
-                <p>${profile.strengths.join('<br>')}</p>
-            </div>
-            <div class="swot-box opportunity">
-                <h3 style="color: #17a2b8;">Opportunities</h3>
-                <p>${profile.opportunities.join('<br>')}</p>
-            </div>
-            <div class="swot-box weakness">
-                <h3 style="color: #ffc107;">Areas to Develop</h3>
-                <p>${profile.weaknesses.join('<br>')}</p>
-            </div>
-            <div class="swot-box threat">
-                <h3 style="color: #dc3545;">Challenges</h3>
-                <p>${profile.threats.join('<br>')}</p>
-            </div>
-        </div>
-    </div>
-    
-    <div class="section">
-        <h3 style="color: #6B0F1A;">Your Assessment Scores:</h3>
-        <table style="width: 100%;">
-            <tr>
-                <td>Marketing & Sales: <strong>${userData.scores.MKT}</strong></td>
-                <td>Finance: <strong>${userData.scores.FIN}</strong></td>
-            </tr>
-            <tr>
-                <td>Accounting: <strong>${userData.scores.ACC}</strong></td>
-                <td>Business Analytics/IS: <strong>${userData.scores.BAIS}</strong></td>
-            </tr>
-            <tr>
-                <td>Management & HR: <strong>${userData.scores.MGT}</strong></td>
-                <td>International Business: <strong>${userData.scores.IB}</strong></td>
-            </tr>
-            <tr>
-                <td>Entrepreneurship: <strong>${userData.scores.ENT}</strong></td>
-                <td></td>
-            </tr>
-        </table>
-    </div>
-    
-    <div style="background: #6B0F1A; color: white; padding: 15px; text-align: center; margin-top: 30px;">
-        <p style="margin: 5px;"><strong>NEXT STEPS:</strong></p>
-        <p style="margin: 5px;">Visit: ualr.edu/business</p>
-        <p style="margin: 5px;">Email: business@ualr.edu</p>
-        <p style="margin: 5px;">Call: (501) 569-3356</p>
-        <p style="margin: 5px;">Schedule a campus tour at ualr.edu/admissions/visit</p>
-    </div>
-    
-    <div class="no-print" style="text-align: center; margin-top: 20px;">
-        <button onclick="window.print()" style="background: #6B0F1A; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Print This Report</button>
-    </div>
+    <button onclick="window.print()" class="no-print">Print as PDF</button>
 </body>
-</html>
-            `;
+</html>`;
             
-            // Create a blob and download
-            const blob = new Blob([htmlContent], { type: 'text/html' });
+            const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
             const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `UALR_Business_Superpower_${userData.name.replace(/\s+/g, '_')}.html`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `UALR_Results_${userData.name.replace(/\s+/g, '_')}.html`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
             window.URL.revokeObjectURL(url);
-            
-            // Show success message
-            alert('Your results have been downloaded! Open the file and use File → Print to save as PDF.');
         }
 
         function retakeQuiz() {
