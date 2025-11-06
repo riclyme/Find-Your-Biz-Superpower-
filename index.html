@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Find Your Biz Superpower 🚀 | UALR School of Business</title>
+    <title>Find Your Biz Superpower 🚀 | UALR</title>
     <style>
         * {
             margin: 0;
@@ -52,169 +52,10 @@
             color: #C0C0C0;
         }
 
-        /* Landing Page Styles */
-        .landing-container {
-            padding: 40px;
-            animation: fadeIn 0.8s ease;
-        }
-
-        .landing-container h2 {
-            color: #333;
-            margin-bottom: 20px;
-            font-size: 1.8em;
-            text-align: center;
-        }
-
-        .benefits-list {
-            background: #f8f9fa;
-            border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 30px;
-        }
-
-        .benefits-list h3 {
-            color: #667eea;
-            margin-bottom: 15px;
-            font-size: 1.2em;
-        }
-
-        .benefits-list ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .benefits-list li {
-            padding: 10px 0;
-            padding-left: 30px;
-            position: relative;
-            color: #555;
-            line-height: 1.6;
-        }
-
-        .benefits-list li:before {
-            content: "✓";
-            position: absolute;
-            left: 0;
-            color: #4caf50;
-            font-weight: bold;
-            font-size: 1.2em;
-        }
-
-        .registration-form {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            border: 2px solid #e0e0e0;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: #333;
-            font-weight: 500;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 1em;
-            transition: border-color 0.3s ease;
-        }
-
-        .form-group input:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
-        .form-group input.error {
-            border-color: #f44336;
-        }
-
-        .error-message {
-            color: #f44336;
-            font-size: 0.9em;
-            margin-top: 5px;
-            display: none;
-        }
-
-        .privacy-box {
-            background: #FFF0F0;
-            border: 2px solid #6B0F1A;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-
-        .privacy-box h4 {
-            color: #6B0F1A;
-            margin-bottom: 10px;
-            font-size: 1.1em;
-        }
-
-        .privacy-box p {
-            color: #555;
-            line-height: 1.6;
-            margin-bottom: 15px;
-            font-size: 0.95em;
-        }
-
-        .checkbox-group {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 20px;
-        }
-
-        .checkbox-group input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            margin-right: 10px;
-            margin-top: 2px;
-            cursor: pointer;
-        }
-
-        .checkbox-group label {
-            color: #333;
-            line-height: 1.5;
-            cursor: pointer;
-            flex: 1;
-        }
-
-        .start-quiz-btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            font-size: 1.2em;
-            border-radius: 50px;
-            cursor: pointer;
-            width: 100%;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-            margin-top: 20px;
-        }
-
-        .start-quiz-btn:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
-        }
-
-        .start-quiz-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        /* Quiz Container Styles */
         .quiz-container {
             padding: 30px;
             max-height: 600px;
             overflow-y: auto;
-            display: none;
         }
 
         .progress-bar {
@@ -229,151 +70,167 @@
         .progress-fill {
             height: 100%;
             background: linear-gradient(90deg, #6B0F1A, #8B1F2A);
-            border-radius: 10px;
             transition: width 0.3s ease;
-            width: 0%;
+            border-radius: 10px;
+        }
+
+        .start-screen, .quiz-screen, .result-screen {
+            display: none;
+        }
+
+        .start-screen.active, .quiz-screen.active, .result-screen.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #6B0F1A;
         }
 
         .question-card {
-            margin-bottom: 25px;
+            background: #f9f9f9;
             padding: 20px;
-            background: #f8f9fa;
-            border-radius: 15px;
-            transform: translateY(20px);
-            opacity: 0;
-            animation: slideUp 0.5s ease forwards;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .question-text {
             font-size: 1.1em;
             margin-bottom: 15px;
             color: #333;
-            font-weight: 500;
         }
 
-        .rating-container {
+        .rating-scale {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 10px;
         }
 
-        .rating-label {
-            font-size: 0.85em;
-            color: #666;
-            min-width: 80px;
-        }
-
-        .rating-label.left {
-            text-align: right;
-        }
-
-        .rating-buttons {
-            display: flex;
-            gap: 8px;
-        }
-
-        .rating-btn {
-            width: 45px;
-            height: 45px;
-            border: 2px solid #ddd;
+        .rating-option {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            margin: 0 5px;
             background: white;
-            border-radius: 50%;
+            border: 2px solid #ddd;
+            border-radius: 8px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: bold;
-            font-size: 1.1em;
-            color: #666;
+            transition: all 0.3s;
         }
 
-        .rating-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(107, 15, 26, 0.3);
+        .rating-option:hover {
+            background: #f0f0f0;
+            border-color: #6B0F1A;
+            transform: translateY(-2px);
+        }
+
+        .rating-option.selected {
+            background: #6B0F1A;
+            color: white;
             border-color: #6B0F1A;
         }
 
-        .rating-btn.selected {
-            background: linear-gradient(135deg, #6B0F1A 0%, #8B1F2A 100%);
-            color: white;
-            border-color: transparent;
-            transform: scale(1.1);
+        .rating-label {
+            font-size: 0.9em;
+            margin-top: 5px;
         }
 
-        .submit-btn {
+        .btn {
             background: linear-gradient(135deg, #6B0F1A 0%, #8B1F2A 100%);
             color: white;
             border: none;
-            padding: 15px 40px;
-            font-size: 1.2em;
-            border-radius: 50px;
+            padding: 12px 30px;
+            font-size: 16px;
+            border-radius: 25px;
             cursor: pointer;
-            margin: 30px auto;
-            display: block;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(107, 15, 26, 0.4);
-        }
-
-        .submit-btn:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(107, 15, 26, 0.6);
-        }
-
-        .submit-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        /* Result Container Styles */
-        .result-container {
-            display: none;
-            padding: 30px;
-            text-align: center;
-            animation: fadeIn 0.8s ease;
-        }
-
-        .result-badge {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            color: white;
-            padding: 20px 40px;
-            border-radius: 50px;
+            transition: all 0.3s;
             display: inline-block;
-            font-size: 1.3em;
-            font-weight: bold;
-            margin-bottom: 20px;
-            box-shadow: 0 5px 20px rgba(245, 87, 108, 0.4);
-            animation: bounce 1s ease;
+            margin: 10px 5px;
+            font-weight: 600;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(107, 15, 26, 0.3);
+        }
+
+        .btn-secondary {
+            background: #C0C0C0;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #a0a0a0;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .result-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .result-title {
             font-size: 2.5em;
-            color: #333;
+            color: #6B0F1A;
             margin-bottom: 10px;
         }
 
-        .result-subtitle {
-            font-size: 1.3em;
-            color: #666;
-            margin-bottom: 30px;
+        .result-description {
+            font-size: 1.2em;
+            color: #555;
+            margin-bottom: 20px;
         }
 
         .result-details {
-            background: #f8f9fa;
-            border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 20px;
             text-align: left;
-        }
-
-        .result-details h3 {
-            color: #6B0F1A;
-            margin-bottom: 15px;
-            font-size: 1.3em;
-        }
-
-        .result-details p {
-            color: #555;
-            line-height: 1.6;
-            margin-bottom: 10px;
+            margin-top: 30px;
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
         }
 
         .swot-grid {
@@ -386,1011 +243,551 @@
         .swot-box {
             background: white;
             padding: 15px;
-            border-radius: 10px;
-            border-left: 4px solid;
+            border-radius: 8px;
+            border-left: 4px solid #6B0F1A;
         }
-
-        .swot-box.strength { border-color: #4caf50; }
-        .swot-box.weakness { border-color: #ff9800; }
-        .swot-box.opportunity { border-color: #2196f3; }
-        .swot-box.threat { border-color: #f44336; }
 
         .swot-box h4 {
-            font-size: 0.9em;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            opacity: 0.7;
-        }
-
-        .swot-box p {
-            font-size: 0.95em;
-            line-height: 1.4;
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            margin-top: 30px;
-            flex-wrap: wrap;
-        }
-
-        .action-btn {
-            padding: 12px 25px;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            display: inline-block;
-            cursor: pointer;
-            border: none;
-        }
-
-        .action-btn.primary {
-            background: linear-gradient(135deg, #6B0F1A 0%, #8B1F2A 100%);
-            color: white;
-            box-shadow: 0 4px 15px rgba(107, 15, 26, 0.3);
-        }
-
-        .action-btn.secondary {
-            background: white;
             color: #6B0F1A;
-            border: 2px solid #6B0F1A;
+            margin-bottom: 10px;
         }
 
-        .action-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(107, 15, 26, 0.4);
+        .swot-box ul {
+            list-style: none;
+            padding: 0;
         }
 
-        /* Success message */
-        .success-message {
-            background: #4caf50;
-            color: white;
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 20px;
-            display: none;
+        .swot-box li {
+            padding: 5px 0;
+            position: relative;
+            padding-left: 20px;
         }
 
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        .swot-box li:before {
+            content: "•";
+            color: #6B0F1A;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
         }
 
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes slideUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-10px); }
-            60% { transform: translateY(-5px); }
-        }
-
-        @media (max-width: 600px) {
-            .rating-container {
-                flex-direction: column;
-                gap: 10px;
-            }
-            
-            .rating-label {
-                width: 100%;
-                text-align: center !important;
-            }
-            
+        @media (max-width: 768px) {
             .swot-grid {
                 grid-template-columns: 1fr;
             }
             
-            .result-title {
-                font-size: 2em;
+            .rating-scale {
+                flex-direction: column;
+            }
+            
+            .rating-option {
+                width: 100%;
+                margin: 5px 0;
             }
         }
     </style>
-    
-    <!-- jsPDF Library - Free PDF Generation -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>🎯 Find Your Biz Superpower</h1>
-            <p>Discover Your Perfect Business Major at UALR</p>
+            <h1>🎯 Find Your Business Superpower</h1>
+            <p>Discover your ideal business major at UALR School of Business</p>
         </div>
 
-        <!-- Landing Page / Registration -->
-        <div id="landingContainer" class="landing-container">
-            <h2>Welcome Future Business Leader! 🚀</h2>
-            
-            <div class="benefits-list">
-                <h3>In just 90 seconds, you'll discover:</h3>
-                <ul>
-                    <li>Your unique business superpower and leadership style</li>
-                    <li>The perfect business major tailored to your strengths</li>
-                    <li>Which successful business leader you're most like</li>
-                    <li>Your personalized SWOT analysis</li>
-                    <li>The exact UALR professor who can guide your journey</li>
-                    <li>Specific opportunities and programs at UALR for your path</li>
-                </ul>
+        <!-- Start Screen -->
+        <div class="start-screen active" id="startScreen">
+            <div class="quiz-container">
+                <h2 style="color: #6B0F1A; margin-bottom: 20px;">Welcome Future Business Leader!</h2>
+                <p style="margin-bottom: 30px;">This 90-second quiz will help you discover which business major aligns with your interests and strengths.</p>
+                
+                <div class="form-group">
+                    <label>Name *</label>
+                    <input type="text" id="studentName" required placeholder="Enter your full name">
+                </div>
+                
+                <div class="form-group">
+                    <label>Email *</label>
+                    <input type="email" id="studentEmail" required placeholder="your.email@example.com">
+                </div>
+                
+                <div class="form-group">
+                    <label>High School (Optional)</label>
+                    <input type="text" id="studentSchool" placeholder="Your high school">
+                </div>
+                
+                <div class="form-group">
+                    <label>Expected Graduation Year (Optional)</label>
+                    <input type="text" id="gradYear" placeholder="2025">
+                </div>
+                
+                <button class="btn" onclick="startQuiz()">Start Quiz →</button>
             </div>
-
-            <form id="registrationForm" class="registration-form">
-                <div class="form-group">
-                    <label for="studentName">Your Name *</label>
-                    <input type="text" id="studentName" name="name" required placeholder="Enter your full name">
-                    <span class="error-message">Please enter your name</span>
-                </div>
-
-                <div class="form-group">
-                    <label for="studentEmail">Email Address *</label>
-                    <input type="email" id="studentEmail" name="email" required placeholder="your.email@example.com">
-                    <span class="error-message">Please enter a valid email address</span>
-                </div>
-
-                <div class="form-group">
-                    <label for="highSchool">High School (Optional)</label>
-                    <input type="text" id="highSchool" name="school" placeholder="Your current high school">
-                </div>
-
-                <div class="form-group">
-                    <label for="gradYear">Expected Graduation Year (Optional)</label>
-                    <input type="text" id="gradYear" name="gradYear" placeholder="e.g., 2025">
-                </div>
-
-                <div class="privacy-box">
-                    <h4>📋 Privacy & Data Use Agreement</h4>
-                    <p><strong>How we'll use your information:</strong></p>
-                    <p>✓ UALR School of Business staff will email you your personalized results</p>
-                    <p>✓ We'll send helpful information about business programs that match your interests</p>
-                    <p>✓ Connect you with relevant professors and current students in your area of interest</p>
-                    <p>✓ Invite you to exclusive events and opportunities at UALR</p>
-                    <p><strong>Your privacy is protected:</strong></p>
-                    <p>✗ We will NEVER sell or share your data with third parties</p>
-                    <p>✗ Your information is used solely for educational guidance</p>
-                    <p>✗ You can opt-out of communications at any time</p>
-                </div>
-
-                <div class="checkbox-group">
-                    <input type="checkbox" id="consent" name="consent" required>
-                    <label for="consent">
-                        I agree to allow UALR School of Business staff to contact me via email to help with my business major selection and provide information about relevant programs and opportunities. I understand my data will be kept confidential and will not be sold or shared with third parties.
-                    </label>
-                </div>
-
-                <button type="submit" class="start-quiz-btn" id="startQuizBtn">
-                    Start My 90-Second Quiz →
-                </button>
-            </form>
         </div>
 
-        <!-- Quiz Container -->
-        <div id="quizContainer" class="quiz-container">
-            <div class="progress-bar">
-                <div id="progressFill" class="progress-fill"></div>
+        <!-- Quiz Screen -->
+        <div class="quiz-screen" id="quizScreen">
+            <div class="quiz-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressBar"></div>
+                </div>
+                
+                <div id="questionContainer"></div>
+                
+                <div class="navigation">
+                    <button class="btn btn-secondary" onclick="previousQuestion()" id="prevBtn">← Previous</button>
+                    <button class="btn" onclick="nextQuestion()" id="nextBtn">Next →</button>
+                </div>
             </div>
-            <div id="questions"></div>
-            <button id="submitBtn" class="submit-btn" onclick="calculateResults()" disabled>
-                Discover My Superpower ✨
-            </button>
         </div>
 
-        <!-- Result Container -->
-        <div id="resultContainer" class="result-container"></div>
+        <!-- Result Screen -->
+        <div class="result-screen" id="resultScreen">
+            <div class="quiz-container">
+                <div class="result-card" id="resultContent">
+                    <!-- Results will be inserted here -->
+                </div>
+            </div>
+        </div>
     </div>
 
-    <!-- EmailJS SDK -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-    <script type="text/javascript">
-        (function() {
-            // Initialize EmailJS with your public key
-            emailjs.init("YOUR_EMAILJS_PUBLIC_KEY"); // Replace with your actual public key
-        })();
-    </script>
     <script>
-        // Store user data
-        let userData = {
-            name: '',
-            email: '',
-            school: '',
-            gradYear: '',
-            timestamp: '',
-            result: '',
-            scores: {}
-        };
-
+        // All 21 Questions for 8 Majors
         const questions = [
-            { id: 1, text: "I love brainstorming slogans, visuals, or campaign ideas", category: "MKT" },
-            { id: 2, text: "I enjoy solving puzzles with data, charts, or spreadsheets", category: "FIN" },
-            { id: 3, text: "I'm comfortable taking a smart risk to test a new idea", category: "ENT" },
-            { id: 4, text: "I naturally organize people and tasks to get things done", category: "MGT" },
-            { id: 5, text: "Other cultures and languages fascinate me", category: "IB" },
-            { id: 6, text: "I'm curious about how apps/databases/AI power businesses", category: "BAIS" },
-            { id: 7, text: "I like persuading people—pitching, selling, or storytelling", category: "MKT" },
-            { id: 8, text: "I notice small errors and want the numbers to be exact", category: "ACC" },
-            { id: 9, text: "I'd rather build something new than follow the crowd", category: "ENT" },
-            { id: 10, text: "I enjoy helping a team work well together", category: "MGT" },
-            { id: 11, text: "I want a career with travel or global connections", category: "IB" },
-            { id: 12, text: "I like turning messy info into clean dashboards or systems", category: "BAIS" },
-            { id: 13, text: "I follow brands and think about why customers love them", category: "MKT" },
-            { id: 14, text: "I'm drawn to investing, money flows, or financial markets", category: "FIN" },
-            { id: 15, text: "I'd love to start my own venture one day", category: "ENT" },
-            { id: 16, text: "I enjoy coaching or leading groups toward a goal", category: "MGT" },
-            { id: 17, text: "I'm interested in how business works across countries", category: "IB" },
-            { id: 18, text: "I want to automate tasks and make processes smarter", category: "BAIS" }
+            { id: 1, text: "I love brainstorming slogans, visuals, or campaign ideas", category: "marketing" },
+            { id: 2, text: "I enjoy solving puzzles with data, charts, or spreadsheets", category: "finance" },
+            { id: 3, text: "I'm comfortable taking a smart risk to test a new idea", category: "entrepreneurship" },
+            { id: 4, text: "I naturally organize people and tasks to get things done", category: "management" },
+            { id: 5, text: "Other cultures and languages fascinate me", category: "international" },
+            { id: 6, text: "I'm curious about how apps/databases/AI power businesses", category: "analytics" },
+            { id: 7, text: "I like persuading people—pitching, selling, or storytelling", category: "marketing" },
+            { id: 8, text: "I notice small errors and want the numbers to be exact", category: "accounting" },
+            { id: 9, text: "I'd rather build something new than follow the crowd", category: "entrepreneurship" },
+            { id: 10, text: "I enjoy helping a team work well together", category: "management" },
+            { id: 11, text: "I want a career with travel or global connections", category: "international" },
+            { id: 12, text: "I like turning messy info into clean dashboards or systems", category: "analytics" },
+            { id: 13, text: "I follow brands and think about why customers love them", category: "marketing" },
+            { id: 14, text: "I'm drawn to investing, money flows, or financial markets", category: "finance" },
+            { id: 15, text: "I'd love to start my own venture one day", category: "entrepreneurship" },
+            { id: 16, text: "I enjoy coaching or leading groups toward a goal", category: "management" },
+            { id: 17, text: "I'm interested in how business works across countries", category: "international" },
+            { id: 18, text: "I want to automate tasks and make processes smarter", category: "analytics" },
+            { id: 19, text: "I'm fascinated by how supply, demand, and market forces shape society", category: "economics" },
+            { id: 20, text: "I enjoy analyzing economic policies and their impact on businesses and communities", category: "economics" },
+            { id: 21, text: "I want to understand global economic trends and predict market behavior", category: "economics" }
         ];
 
+        // All 8 Major Profiles
         const profiles = {
-            MKT: {
+            marketing: {
                 title: "The Storyteller",
-                icon: "🎨",
-                roleModel: "David Ogilvy (Advertising Legend)",
+                emoji: "📢",
                 description: "You think like a customer, love creative campaigns, and enjoy influencing",
-                path: "B.B.A. in Marketing with focus on advertising, digital marketing, and professional sales",
-                professor: "Dr. Seunghyun Kim",
-                strengths: ["Empathy for customers", "Creative ideation", "Persuasive communication"],
-                weaknesses: ["May over-index on ideas vs. data", "Need to balance creativity with analytics"],
-                opportunities: ["Digital Marketing Certificate", "Professional Sales Competition", "Marketing Club Leadership"],
-                threats: ["Fast-changing digital landscape", "Need for data skills"],
-                leadership: "Storyteller/Influencer"
+                degree: "B.B.A. in Marketing",
+                concentrations: ["Digital Marketing", "Professional Selling"],
+                advisor: "Dr. Seunghyun Kim",
+                roleModel: "David Ogilvy (Advertising Legend)",
+                swot: {
+                    strengths: ["Empathy for customers", "Creative ideation", "Persuasive communication"],
+                    weaknesses: ["May over-index on ideas vs. data", "Need to balance creativity with analytics"],
+                    opportunities: ["Digital Marketing Certificate Program", "Marketing Club leadership", "UALR Business Advisory Council networking", "Alumni mentorship through Marketing Alumni Network", "AI Powered Marketing Coaching"],
+                    threats: ["Fast-changing digital landscape", "Need for data skills"]
+                }
             },
-            FIN: {
+            finance: {
                 title: "The Strategic Investor",
-                icon: "📈",
-                roleModel: "Warren Buffett",
+                emoji: "📈",
                 description: "You're drawn to markets, valuation, and smart risk-taking",
-                path: "B.B.A. in Finance (General, Financial Services & Risk Management, or Real Estate)",
-                professor: "Dr. John Hall",
-                strengths: ["Quantitative rigor", "Risk awareness", "Long-term thinking"],
-                weaknesses: ["Analysis paralysis", "Need storytelling skills"],
-                opportunities: ["Investment Club", "Bloomberg Terminal Training", "Finance Internships"],
-                threats: ["Complex math requirements", "Competitive field"],
-                leadership: "Analytical Strategist"
+                degree: "B.B.A. in Finance",
+                concentrations: ["General Finance", "Financial Services & Risk Management", "Real Estate"],
+                advisor: "Dr. John Hall",
+                roleModel: "Warren Buffett",
+                swot: {
+                    strengths: ["Quantitative rigor", "Risk awareness", "Long-term thinking"],
+                    weaknesses: ["Analysis paralysis", "Need storytelling skills"],
+                    opportunities: ["Real Estate Club", "Alumni connections at Stephens Inc., Bank of America, Arvest", "Annual Finance Case Competition"],
+                    threats: ["Complex math requirements", "Competitive field"]
+                }
             },
-            ACC: {
+            accounting: {
                 title: "The Detail Guardian",
-                icon: "🔍",
-                roleModel: "Mary T. Barra (GM CEO - precision + execution)",
+                emoji: "📊",
                 description: "You notice errors, love accuracy, and want to speak the language of business",
-                path: "B.B.A. in Accounting - CPA aligned, available online",
-                professor: "Dr. John Hall and Dr. Gaurav Kumar",
-                strengths: ["Accuracy obsession", "Compliance mindset", "Process discipline"],
-                weaknesses: ["Perfectionism", "Slower decision-making"],
-                opportunities: ["CPA Prep Program", "Big 4 Recruiting", "Accounting Society"],
-                threats: ["Automation of routine tasks", "Need for tech skills"],
-                leadership: "Precision Operator"
+                degree: "B.B.A. in Accounting",
+                concentrations: ["CPA-aligned curriculum", "Available online"],
+                advisor: "Dr. John Hall and Dr. Gaurav Kumar",
+                roleModel: "Mary T. Barra (GM CEO - precision + execution)",
+                swot: {
+                    strengths: ["Accuracy obsession", "Compliance mindset", "Process discipline"],
+                    weaknesses: ["Perfectionism", "Slower decision-making"],
+                    opportunities: ["Beta Alpha Psi honor society", "VITA Tax Assistance Program", "CPA Exam Prep Program", "Accounting Society", "Meet the Firms networking event"],
+                    threats: ["Automation of routine tasks", "Need for tech skills"]
+                }
             },
-            BAIS: {
+            analytics: {
                 title: "The Systems Architect",
-                icon: "💻",
-                roleModel: "Satya Nadella (Microsoft CEO)",
+                emoji: "💻",
                 description: "You like turning data into insight and building smart systems",
-                path: "B.B.A. in Business Analytics or Business Information Systems (STEM designation)",
-                professor: "Dr. Yue Zhao",
-                strengths: ["Data literacy", "Automation mindset", "Process improvement"],
-                weaknesses: ["Tech tunnel vision", "Need people skills"],
-                opportunities: ["STEM Designation Benefits", "Analytics Certificate", "Tech Consulting"],
-                threats: ["Rapid tech changes", "Need for continuous learning"],
-                leadership: "Systems Thinker"
+                degree: "B.B.A. in Business Analytics OR Business Information Systems",
+                concentrations: ["STEM designation"],
+                advisor: "Dr. Yue Zhao",
+                roleModel: "Satya Nadella (Microsoft CEO)",
+                swot: {
+                    strengths: ["Data literacy", "Automation mindset", "Process improvement"],
+                    weaknesses: ["Tech tunnel vision", "Need people skills"],
+                    opportunities: ["Analytics Certificate Program", "Data Analytics Lab access", "Information Systems Club", "Alumni at J.B. Hunt, Walmart Tech, Dillard's IT"],
+                    threats: ["Rapid tech changes", "Need for continuous learning"]
+                }
             },
-            MGT: {
+            management: {
                 title: "The People-First Leader",
-                icon: "👥",
-                roleModel: "Indra Nooyi / Sheryl Sandberg",
+                emoji: "👥",
                 description: "You organize teams, drive execution, and develop people",
-                path: "B.B.A. in Management (General, HR, or Innovation & Entrepreneurship concentrations)",
-                professor: "Dr. Yue Zhao",
-                strengths: ["Team building", "Execution focus", "Conflict resolution"],
-                weaknesses: ["Avoiding tough calls", "Scope creep"],
-                opportunities: ["Leadership Development Program", "HR Certificate", "Management Consulting"],
-                threats: ["Managing diverse teams", "Work-life balance"],
-                leadership: "People-First Coach"
+                degree: "B.B.A. in Management",
+                concentrations: ["General Management", "Human Resource Management", "Innovation & Entrepreneurship"],
+                advisor: "Dr. Yue Zhao",
+                roleModel: "Indra Nooyi / Sheryl Sandberg",
+                swot: {
+                    strengths: ["Team building", "Execution focus", "Conflict resolution"],
+                    weaknesses: ["Avoiding tough calls", "Scope creep"],
+                    opportunities: ["Society for Human Resource Management (SHRM) chapter", "Executive Speaker Series", "Alumni mentor network in HR at Tyson, Windstream, UAMS", "Student Government leadership roles"],
+                    threats: ["Managing diverse teams", "Work-life balance"]
+                }
             },
-            IB: {
+            international: {
                 title: "The Global Diplomat",
-                icon: "🌍",
-                roleModel: "Indra Nooyi (global strategy expert)",
+                emoji: "🌍",
                 description: "You're curious about cultures and cross-border business",
-                path: "B.B.A. in International Business with field study experience and language proficiency",
-                professor: "Dr. Yue Zhao",
-                strengths: ["Cultural agility", "Negotiation skills", "Macro perspective"],
-                weaknesses: ["Complexity overload", "Travel demands"],
-                opportunities: ["International Field Study", "Language Minor", "Global Trade Certificate"],
-                threats: ["Geopolitical risks", "Language requirements"],
-                leadership: "Global Integrator"
+                degree: "B.B.A. in International Business",
+                concentrations: ["Includes field study experience"],
+                advisor: "Dr. Yue Zhao",
+                roleModel: "Indra Nooyi",
+                swot: {
+                    strengths: ["Cultural agility", "Negotiation skills", "Macro perspective"],
+                    weaknesses: ["Complexity overload", "Travel demands"],
+                    opportunities: ["International Field Study Program (travel abroad)", "Language minor combinations", "Alumni network in global companies (Walmart International, Riceland Foods)"],
+                    threats: ["Geopolitical risks", "Language requirements"]
+                }
             },
-            ENT: {
+            entrepreneurship: {
                 title: "The Venture Catalyst",
-                icon: "🚀",
-                roleModel: "Sara Blakely / Daymond John",
+                emoji: "🚀",
                 description: "You love to launch, test, and iterate on new ideas",
-                path: "Innovation & Entrepreneurship concentration in Management B.B.A.",
-                professor: "Dr. Yue Zhao",
-                strengths: ["Initiative", "Resilience", "Bias for action"],
-                weaknesses: ["Impulsiveness", "Resource constraints"],
-                opportunities: ["Startup Incubator", "Pitch Competitions", "Venture Capital Network"],
-                threats: ["High failure rate", "Financial uncertainty"],
-                leadership: "Builder/Founder"
+                degree: "B.B.A. in Management with Innovation & Entrepreneurship concentration",
+                concentrations: ["Innovation & Entrepreneurship focus"],
+                advisor: "Dr. Yue Zhao",
+                roleModel: "Sara Blakely / Daymond John",
+                swot: {
+                    strengths: ["Initiative", "Resilience", "Bias for action"],
+                    weaknesses: ["Impulsiveness", "Resource constraints"],
+                    opportunities: ["Business Plan Competition", "The Venture Center partnership", "SBDC (Small Business Development Center) resources", "Alumni entrepreneur network", "AI Powered Business Coaching"],
+                    threats: ["High failure rate", "Financial uncertainty"]
+                }
+            },
+            economics: {
+                title: "The Economic Analyst",
+                emoji: "📉",
+                description: "You analyze how societies allocate resources and predict market behaviors",
+                degree: "B.B.A. in Economics",
+                concentrations: ["Quantitative Economics focus available"],
+                advisor: "Dr. John Hall",
+                roleModel: "Janet Yellen / Paul Krugman",
+                swot: {
+                    strengths: ["Systems thinking", "Policy analysis", "Statistical modeling"],
+                    weaknesses: ["Too theoretical", "May lack practical business skills"],
+                    opportunities: ["Arkansas Economic Development Commission internships", "Research opportunities with UALR Economic Research Center", "Policy analysis projects with state government", "Economics Speaker Series"],
+                    threats: ["Abstract concepts", "Heavy math/statistics requirements"]
+                }
             }
         };
 
-        let answers = {};
+        let currentQuestion = 0;
+        let responses = {};
+        let studentData = {};
 
-        // Handle registration form
-        document.getElementById('registrationForm').addEventListener('submit', function(e) {
-            e.preventDefault();
+        function startQuiz() {
+            const name = document.getElementById('studentName').value;
+            const email = document.getElementById('studentEmail').value;
             
-            // Validate form
-            const name = document.getElementById('studentName').value.trim();
-            const email = document.getElementById('studentEmail').value.trim();
-            const consent = document.getElementById('consent').checked;
-            
-            let isValid = true;
-            
-            // Validate name
-            if (!name) {
-                document.getElementById('studentName').classList.add('error');
-                document.getElementById('studentName').nextElementSibling.style.display = 'block';
-                isValid = false;
-            } else {
-                document.getElementById('studentName').classList.remove('error');
-                document.getElementById('studentName').nextElementSibling.style.display = 'none';
+            if (!name || !email) {
+                alert('Please enter your name and email to begin');
+                return;
             }
             
-            // Validate email
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!email || !emailRegex.test(email)) {
-                document.getElementById('studentEmail').classList.add('error');
-                document.getElementById('studentEmail').nextElementSibling.style.display = 'block';
-                isValid = false;
-            } else {
-                document.getElementById('studentEmail').classList.remove('error');
-                document.getElementById('studentEmail').nextElementSibling.style.display = 'none';
-            }
+            studentData = {
+                name: name,
+                email: email,
+                school: document.getElementById('studentSchool').value,
+                gradYear: document.getElementById('gradYear').value,
+                timestamp: new Date().toISOString()
+            };
             
-            // Check consent
-            if (!consent) {
-                alert('Please agree to the terms to continue.');
-                isValid = false;
-            }
-            
-            if (isValid) {
-                // Store user data
-                userData.name = name;
-                userData.email = email;
-                userData.school = document.getElementById('highSchool').value;
-                userData.gradYear = document.getElementById('gradYear').value;
-                userData.timestamp = new Date().toISOString();
-                
-                // Hide landing page and show quiz
-                document.getElementById('landingContainer').style.display = 'none';
-                document.getElementById('quizContainer').style.display = 'block';
-                
-                // Initialize quiz
-                initializeQuiz();
-            }
-        });
-
-        function initializeQuiz() {
-            const questionsContainer = document.getElementById('questions');
-            
-            questions.forEach((q, index) => {
-                const questionCard = document.createElement('div');
-                questionCard.className = 'question-card';
-                questionCard.style.animationDelay = `${index * 0.05}s`;
-                
-                questionCard.innerHTML = `
-                    <div class="question-text">${q.id}. ${q.text}</div>
-                    <div class="rating-container">
-                        <span class="rating-label left">Strongly<br>Disagree</span>
-                        <div class="rating-buttons">
-                            ${[1,2,3,4,5].map(value => `
-                                <button class="rating-btn" onclick="selectRating(${q.id}, ${value}, this)">
-                                    ${value}
-                                </button>
-                            `).join('')}
-                        </div>
-                        <span class="rating-label">Strongly<br>Agree</span>
-                    </div>
-                `;
-                
-                questionsContainer.appendChild(questionCard);
-            });
+            document.getElementById('startScreen').classList.remove('active');
+            document.getElementById('quizScreen').classList.add('active');
+            showQuestion(0);
         }
 
-        function selectRating(questionId, value, button) {
-            const parent = button.parentElement;
-            parent.querySelectorAll('.rating-btn').forEach(btn => {
-                btn.classList.remove('selected');
-            });
+        function showQuestion(index) {
+            const question = questions[index];
+            const container = document.getElementById('questionContainer');
             
-            button.classList.add('selected');
-            answers[questionId] = value;
+            container.innerHTML = `
+                <div class="question-card">
+                    <h3 style="color: #6B0F1A; margin-bottom: 10px;">Question ${index + 1} of ${questions.length}</h3>
+                    <p class="question-text">${question.text}</p>
+                    <div class="rating-scale">
+                        <div class="rating-option ${responses[question.id] === 1 ? 'selected' : ''}" onclick="selectAnswer(${question.id}, 1)">
+                            <div>1</div>
+                            <div class="rating-label">Strongly<br>Disagree</div>
+                        </div>
+                        <div class="rating-option ${responses[question.id] === 2 ? 'selected' : ''}" onclick="selectAnswer(${question.id}, 2)">
+                            <div>2</div>
+                            <div class="rating-label">Disagree</div>
+                        </div>
+                        <div class="rating-option ${responses[question.id] === 3 ? 'selected' : ''}" onclick="selectAnswer(${question.id}, 3)">
+                            <div>3</div>
+                            <div class="rating-label">Neutral</div>
+                        </div>
+                        <div class="rating-option ${responses[question.id] === 4 ? 'selected' : ''}" onclick="selectAnswer(${question.id}, 4)">
+                            <div>4</div>
+                            <div class="rating-label">Agree</div>
+                        </div>
+                        <div class="rating-option ${responses[question.id] === 5 ? 'selected' : ''}" onclick="selectAnswer(${question.id}, 5)">
+                            <div>5</div>
+                            <div class="rating-label">Strongly<br>Agree</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
             updateProgress();
-            checkCompletion();
+            updateNavigation();
+        }
+
+        function selectAnswer(questionId, value) {
+            responses[questionId] = value;
+            showQuestion(currentQuestion);
         }
 
         function updateProgress() {
-            const progress = (Object.keys(answers).length / questions.length) * 100;
-            document.getElementById('progressFill').style.width = progress + '%';
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
         }
 
-        function checkCompletion() {
-            const submitBtn = document.getElementById('submitBtn');
-            if (Object.keys(answers).length === questions.length) {
-                submitBtn.disabled = false;
+        function updateNavigation() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            prevBtn.style.display = currentQuestion === 0 ? 'none' : 'inline-block';
+            
+            if (currentQuestion === questions.length - 1) {
+                nextBtn.textContent = 'Get Results →';
+                nextBtn.onclick = calculateResults;
+            } else {
+                nextBtn.textContent = 'Next →';
+                nextBtn.onclick = nextQuestion;
+            }
+        }
+
+        function nextQuestion() {
+            if (!responses[questions[currentQuestion].id]) {
+                alert('Please select an answer before continuing');
+                return;
+            }
+            
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                showQuestion(currentQuestion);
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                showQuestion(currentQuestion);
             }
         }
 
         function calculateResults() {
-            const scores = {
-                MKT: 0,
-                FIN: 0,
-                ACC: 0,
-                ENT: 0,
-                MGT: 0,
-                IB: 0,
-                BAIS: 0
-            };
-
-            // Calculate scores based on the correct scoring key
-            // Marketing & Professional Sales: Questions 1, 7, 13
-            scores.MKT = (answers[1] || 0) + (answers[7] || 0) + (answers[13] || 0);
-            
-            // Finance & Investing: Questions 2, 14, (optionally 12)
-            scores.FIN = (answers[2] || 0) + (answers[14] || 0) + (answers[12] || 0);
-            
-            // Accounting: Question 8 + whichever of 2 or 14 is higher
-            scores.ACC = (answers[8] || 0) + Math.max(answers[2] || 0, answers[14] || 0);
-            
-            // Entrepreneurship & Innovation: Questions 3, 9, 15
-            scores.ENT = (answers[3] || 0) + (answers[9] || 0) + (answers[15] || 0);
-            
-            // Management & HR: Questions 4, 10, 16
-            scores.MGT = (answers[4] || 0) + (answers[10] || 0) + (answers[16] || 0);
-            
-            // International Business: Questions 5, 11, 17
-            scores.IB = (answers[5] || 0) + (answers[11] || 0) + (answers[17] || 0);
-            
-            // Business Analytics & Information Systems: Questions 6, 12, 18
-            scores.BAIS = (answers[6] || 0) + (answers[12] || 0) + (answers[18] || 0);
-
-            // Store scores
-            userData.scores = scores;
-            
-            console.log('Calculated scores:', scores); // Debug log
-
-            // Find the highest score(s) - handle ties
-            let maxScore = 0;
-            let topCategories = [];
-            
-            for (const [category, score] of Object.entries(scores)) {
-                if (score > maxScore) {
-                    maxScore = score;
-                    topCategories = [category];
-                } else if (score === maxScore && score > 0) {
-                    topCategories.push(category);
-                }
-            }
-            
-            // If no answers given or all zeros, default to a message
-            if (maxScore === 0) {
-                alert('Please answer at least some questions to get your results!');
+            if (!responses[questions[currentQuestion].id]) {
+                alert('Please answer all questions');
                 return;
             }
             
-            // Handle ties
-            let topCategory = topCategories[0];
-            let tieMessage = '';
-            if (topCategories.length > 1) {
-                tieMessage = `You have a tie between ${topCategories.map(cat => profiles[cat].title).join(' and ')}! Consider a major + minor combination.`;
-                console.log('Tie detected:', topCategories, 'with score:', maxScore);
-            }
-            
-            userData.result = topCategory;
-            userData.tie = topCategories.length > 1 ? topCategories : null;
-            
-            // Save to localStorage (simulating database)
-            saveToDatabase();
-            
-            // Display results
-            displayResults(topCategory, scores, tieMessage);
-        }
-
-        function displayResults(topCategory, scores, tieMessage = '') {
-            const profile = profiles[topCategory];
-            const resultContainer = document.getElementById('resultContainer');
-            
-            // Show all scores for transparency
-            const scoreBreakdown = Object.entries(scores)
-                .sort((a, b) => b[1] - a[1])
-                .map(([cat, score]) => `${profiles[cat].icon} ${cat}: ${score}`)
-                .join(' | ');
-            
-            resultContainer.innerHTML = `
-                <div class="result-badge">${profile.icon} Superpower Unlocked!</div>
-                <h2 class="result-title">${profile.title}</h2>
-                <p class="result-subtitle">You could be the next ${profile.roleModel}</p>
-                
-                ${tieMessage ? `<div style="background: #fff3cd; color: #856404; padding: 15px; border-radius: 10px; margin: 20px 0;">
-                    <strong>🎯 ${tieMessage}</strong>
-                </div>` : ''}
-                
-                <div class="result-details">
-                    <h3>Hi ${userData.name}! Here's your personalized profile:</h3>
-                    
-                    <div style="background: #e3f2fd; padding: 15px; border-radius: 10px; margin: 15px 0;">
-                        <strong>Your Scores:</strong><br>
-                        ${scoreBreakdown}
-                    </div>
-                    
-                    <h3>Why This Fits You:</h3>
-                    <p>${profile.description}</p>
-                    
-                    <h3>Your UALR Path:</h3>
-                    <p><strong>${profile.path}</strong></p>
-                    <p>Connect with: <strong>${profile.professor}</strong></p>
-                    
-                    <h3>Leadership Style: ${profile.leadership}</h3>
-                    
-                    <div class="swot-grid">
-                        <div class="swot-box strength">
-                            <h4>💪 Strengths</h4>
-                            <p>${profile.strengths.join(', ')}</p>
-                        </div>
-                        <div class="swot-box weakness">
-                            <h4>⚠️ Watch Out For</h4>
-                            <p>${profile.weaknesses.join(', ')}</p>
-                        </div>
-                        <div class="swot-box opportunity">
-                            <h4>🎯 Opportunities at UALR</h4>
-                            <p>${profile.opportunities.join(', ')}</p>
-                        </div>
-                        <div class="swot-box threat">
-                            <h4>🔍 Challenges to Prepare For</h4>
-                            <p>${profile.threats.join(', ')}</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="action-buttons">
-                    <button class="action-btn primary" onclick="emailResultsSimple()">
-                        📧 Email My Results
-                    </button>
-                    <button class="action-btn secondary" onclick="retakeQuiz()">
-                        🔄 Retake Quiz
-                    </button>
-                    <button class="action-btn primary" onclick="downloadHTMLReport()">
-                        📥 Download Report
-                    </button>
-                </div>
-                
-                <div id="emailSuccess" class="success-message">
-                    ✓ Results sent to ${userData.email}! Check your inbox.
-                </div>
-            `;
-            
-            document.getElementById('quizContainer').style.display = 'none';
-            resultContainer.style.display = 'block';
-        }
-
-        function saveToDatabase() {
-            // Save to localStorage as backup
-            let database = JSON.parse(localStorage.getItem('ualrQuizResults') || '[]');
-            database.push(userData);
-            localStorage.setItem('ualrQuizResults', JSON.stringify(database));
-            
-            // Google Form submission
-            const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLScwysjoOG2Spp7mQS4EydVFiXDYd7iV1c_tz33rg_kOWzkDpA/formResponse';
-            
-            // Build detailed results for submission
-            const profile = profiles[userData.result];
-            const fullResults = `
-RESULT: ${profile.title}
-ROLE MODEL: ${profile.roleModel}
-RECOMMENDED PATH: ${profile.path}
-PROFESSOR TO CONTACT: ${profile.professor}
-
-SCORES BREAKDOWN:
-Marketing: ${userData.scores.MKT}
-Finance: ${userData.scores.FIN}
-Accounting: ${userData.scores.ACC}
-Entrepreneurship: ${userData.scores.ENT}
-Management: ${userData.scores.MGT}
-International Business: ${userData.scores.IB}
-Business Analytics: ${userData.scores.BAIS}
-
-TIMESTAMP: ${new Date().toLocaleString()}
-            `.trim();
-            
-            // Submit to Google Forms with your actual entry IDs
-            const formData = new URLSearchParams({
-                'entry.213989308': userData.name,           // Name
-                'entry.1044424052': userData.email,         // Email
-                'entry.1804933076': userData.school || '',  // School (optional)
-                'entry.12099343': userData.gradYear || '',  // Graduation Year (optional)
-                'entry.1012251372': userData.result,        // Quiz Result (MKT, FIN, etc.)
-                'entry.1869280281': fullResults            // Full detailed results
-            });
-            
-            // Submit to Google Forms
-            fetch(GOOGLE_FORM_URL, {
-                method: 'POST',
-                mode: 'no-cors', // Important: Google Forms requires no-cors mode
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: formData.toString()
-            }).then(() => {
-                console.log('Data submitted to Google Forms successfully!');
-                console.log('Check your responses at: https://docs.google.com/forms/d/1FAIpQLScwysjoOG2Spp7mQS4EydVFiXDYd7iV1c_tz33rg_kOWzkDpA/edit#responses');
-            }).catch(error => {
-                console.error('Error submitting to Google Forms:', error);
-                // Data is still saved in localStorage as backup
-            });
-            
-            console.log('Data being sent:', {
-                name: userData.name,
-                email: userData.email,
-                school: userData.school,
-                gradYear: userData.gradYear,
-                result: userData.result,
-                scores: userData.scores
-            });
-        }
-
-        function emailResultsSimple() {
-            const profile = profiles[userData.result];
-            
-            // Replace this with your Google Apps Script Web App URL
-            const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyklU0McCCQPeDnLDVXWiigqCRIH40GnpcmDTBX5JxrChhY1yievlON0l-EFivWTf9MpA/exec';
-            
-            // If Google Apps Script URL is configured, use it
-            if (GOOGLE_SCRIPT_URL && GOOGLE_SCRIPT_URL !== 'https://script.google.com/macros/s/AKfycbyklU0McCCQPeDnLDVXWiigqCRIH40GnpcmDTBX5JxrChhY1yievlON0l-EFivWTf9MpA/exec') {
-                // Prepare data for Google Apps Script
-                const emailData = {
-                    email: userData.email,
-                    name: userData.name,
-                    result_title: profile.title,
-                    role_model: profile.roleModel,
-                    path: profile.path,
-                    professor: profile.professor,
-                    strengths: profile.strengths.join(', '),
-                    opportunities: profile.opportunities.join(', '),
-                    scores: `Marketing: ${userData.scores.MKT}, Finance: ${userData.scores.FIN}, Accounting: ${userData.scores.ACC}, Business Analytics: ${userData.scores.BAIS}, Management: ${userData.scores.MGT}, International Business: ${userData.scores.IB}, Entrepreneurship: ${userData.scores.ENT}`
-                };
-                
-                // Show loading
-                document.getElementById('emailSuccess').innerHTML = '⏳ Sending email...';
-                document.getElementById('emailSuccess').style.display = 'block';
-                
-                // Send to Google Apps Script
-                fetch(GOOGLE_SCRIPT_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(emailData)
-                })
-                .then(() => {
-                    document.getElementById('emailSuccess').innerHTML = `✅ Results sent to ${userData.email}!`;
-                    setTimeout(() => {
-                        document.getElementById('emailSuccess').style.display = 'none';
-                    }, 5000);
-                })
-                .catch(() => {
-                    // Fallback to mailto if Google Script fails
-                    openMailClient();
-                });
-            } else {
-                // Use mailto as fallback
-                openMailClient();
-            }
-        }
-        
-        function openMailClient() {
-            const profile = profiles[userData.result];
-            const subject = encodeURIComponent('My UALR Business Superpower Results');
-            const body = encodeURIComponent(`
-Hi! I just discovered my business superpower at UALR!
-
-MY RESULT: ${profile.title}
-Role Model: ${profile.roleModel}
-
-${profile.description}
-
-RECOMMENDED PATH: ${profile.path}
-FACULTY ADVISOR: ${profile.professor}
-
-MY STRENGTHS: ${profile.strengths.join(', ')}
-OPPORTUNITIES AT UALR: ${profile.opportunities.join(', ')}
-
-MY SCORES:
-Marketing: ${userData.scores.MKT}
-Finance: ${userData.scores.FIN}
-Accounting: ${userData.scores.ACC}
-Business Analytics: ${userData.scores.BAIS}
-Management: ${userData.scores.MGT}
-International Business: ${userData.scores.IB}
-Entrepreneurship: ${userData.scores.ENT}
-
-Best regards,
-${userData.name}
-            `);
-            
-            window.location.href = `mailto:${userData.email}?subject=${subject}&body=${body}`;
-            document.getElementById('emailSuccess').innerHTML = '✅ Opening your email app...';
-            document.getElementById('emailSuccess').style.display = 'block';
-            setTimeout(() => {
-                document.getElementById('emailSuccess').style.display = 'none';
-            }, 5000);
-        }
-
-        function downloadHTMLReport() {
-            // Check if jsPDF is available
-            if (window.jspdf) {
-                // Generate PDF using jsPDF
-                generatePDF();
-            } else {
-                // Fallback to HTML download
-                downloadHTML();
-            }
-        }
-        
-        function generatePDF() {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
-            const profile = profiles[userData.result];
-            
-            // Set fonts and colors
-            doc.setFont("helvetica");
-            
-            // Header with UALR branding
-            doc.setFillColor(107, 15, 26);
-            doc.rect(0, 0, 210, 40, 'F');
-            
-            doc.setTextColor(255, 255, 255);
-            doc.setFontSize(24);
-            doc.text('UALR SCHOOL OF BUSINESS', 105, 20, { align: 'center' });
-            doc.setFontSize(14);
-            doc.text('Business Superpower Assessment Results', 105, 32, { align: 'center' });
-            
-            // Personal Info
-            doc.setTextColor(0, 0, 0);
-            doc.setFontSize(12);
-            doc.text(`Student: ${userData.name}`, 20, 55);
-            doc.text(`Email: ${userData.email}`, 20, 62);
-            doc.text(`Date: ${new Date().toLocaleDateString()}`, 20, 69);
-            
-            // Result Section
-            doc.setFillColor(240, 240, 240);
-            doc.rect(15, 78, 180, 30, 'F');
-            
-            doc.setTextColor(107, 15, 26);
-            doc.setFontSize(18);
-            doc.text(profile.title.toUpperCase(), 105, 90, { align: 'center' });
-            doc.setFontSize(12);
-            doc.setTextColor(80, 80, 80);
-            doc.text(`Role Model: ${profile.roleModel}`, 105, 100, { align: 'center' });
-            
-            // Description
-            doc.setTextColor(0, 0, 0);
-            doc.setFontSize(11);
-            const lines = doc.splitTextToSize(profile.description, 170);
-            doc.text(lines, 20, 120);
-            
-            // Path & Professor
-            doc.setTextColor(107, 15, 26);
-            doc.setFontSize(12);
-            doc.setFont("helvetica", "bold");
-            doc.text('RECOMMENDED PATH:', 20, 140);
-            doc.setFont("helvetica", "normal");
-            doc.setTextColor(0, 0, 0);
-            doc.setFontSize(10);
-            const pathLines = doc.splitTextToSize(profile.path, 170);
-            doc.text(pathLines, 20, 148);
-            
-            doc.setTextColor(107, 15, 26);
-            doc.setFontSize(12);
-            doc.setFont("helvetica", "bold");
-            doc.text('FACULTY ADVISOR:', 20, 165);
-            doc.setFont("helvetica", "normal");
-            doc.setTextColor(0, 0, 0);
-            doc.setFontSize(10);
-            doc.text(profile.professor, 20, 173);
-            
-            // SWOT Analysis
-            doc.setTextColor(107, 15, 26);
-            doc.setFontSize(14);
-            doc.setFont("helvetica", "bold");
-            doc.text('SWOT ANALYSIS', 105, 188, { align: 'center' });
-            
-            // Strengths & Opportunities (left side)
-            doc.setFont("helvetica", "normal");
-            doc.setTextColor(40, 167, 69);
-            doc.setFontSize(11);
-            doc.text('Strengths:', 20, 200);
-            doc.setTextColor(0, 0, 0);
-            doc.setFontSize(9);
-            let yPos = 207;
-            profile.strengths.forEach(s => {
-                doc.text(`• ${s}`, 20, yPos);
-                yPos += 5;
-            });
-            
-            // Opportunities (right side)
-            doc.setTextColor(23, 162, 184);
-            doc.setFontSize(11);
-            doc.text('Opportunities:', 110, 200);
-            doc.setTextColor(0, 0, 0);
-            doc.setFontSize(9);
-            yPos = 207;
-            profile.opportunities.forEach(o => {
-                const lines = doc.splitTextToSize(`• ${o}`, 85);
-                doc.text(lines, 110, yPos);
-                yPos += lines.length * 5;
-            });
-            
-            // Scores Section
-            doc.setDrawColor(192, 192, 192);
-            doc.line(20, 235, 190, 235);
-            
-            doc.setTextColor(107, 15, 26);
-            doc.setFontSize(12);
-            doc.setFont("helvetica", "bold");
-            doc.text('ASSESSMENT SCORES', 105, 245, { align: 'center' });
-            
-            doc.setFont("helvetica", "normal");
-            doc.setTextColor(0, 0, 0);
-            doc.setFontSize(10);
-            doc.text(`Marketing: ${userData.scores.MKT}     Finance: ${userData.scores.FIN}     Accounting: ${userData.scores.ACC}`, 105, 255, { align: 'center' });
-            doc.text(`Management: ${userData.scores.MGT}     International Business: ${userData.scores.IB}`, 105, 262, { align: 'center' });
-            doc.text(`Business Analytics: ${userData.scores.BAIS}     Entrepreneurship: ${userData.scores.ENT}`, 105, 269, { align: 'center' });
-            
-            // Footer
-            doc.setFillColor(107, 15, 26);
-            doc.rect(0, 280, 210, 20, 'F');
-            doc.setTextColor(255, 255, 255);
-            doc.setFontSize(10);
-            doc.text('Visit: ualr.edu/business | Email: business@ualr.edu | Call: (501) 569-3356', 105, 290, { align: 'center' });
-            
-            // Save PDF
-            doc.save(`UALR_Business_Superpower_${userData.name.replace(/\s+/g, '_')}.pdf`);
-        }
-        
-        function downloadHTML() {
-            // Fallback HTML download (previous implementation)
-            const profile = profiles[userData.result];
-            const htmlContent = `
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>UALR Business Superpower - ${userData.name}</title>
-    <style>
-        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
-        .header { background: #6B0F1A; color: white; padding: 20px; text-align: center; }
-        .section { margin: 20px 0; padding: 15px; background: #f5f5f5; border-left: 4px solid #6B0F1A; }
-        @media print { .no-print { display: none; } }
-    </style>
-</head>
-<body>
-    <div class="header">
-        <h1>UALR SCHOOL OF BUSINESS</h1>
-        <h2>Business Superpower Results</h2>
-    </div>
-    <p><strong>${userData.name}</strong> - ${new Date().toLocaleDateString()}</p>
-    <h2>${profile.title}</h2>
-    <p>${profile.description}</p>
-    <div class="section">
-        <h3>Path:</h3> ${profile.path}
-        <h3>Advisor:</h3> ${profile.professor}
-    </div>
-    <button onclick="window.print()" class="no-print">Print as PDF</button>
-</body>
-</html>`;
-            
-            const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
-            const url = window.URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = `UALR_Results_${userData.name.replace(/\s+/g, '_')}.html`;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            window.URL.revokeObjectURL(url);
-        }
-
-        function retakeQuiz() {
-            // Reset everything
-            answers = {};
-            userData = {
-                name: '',
-                email: '',
-                school: '',
-                gradYear: '',
-                timestamp: '',
-                result: '',
-                scores: {}
+            // Calculate scores for all 8 majors
+            const scores = {
+                marketing: (responses[1] || 0) + (responses[7] || 0) + (responses[13] || 0),
+                finance: (responses[2] || 0) + (responses[14] || 0),
+                accounting: (responses[8] || 0) + Math.max((responses[2] || 0), (responses[14] || 0)),
+                entrepreneurship: (responses[3] || 0) + (responses[9] || 0) + (responses[15] || 0),
+                management: (responses[4] || 0) + (responses[10] || 0) + (responses[16] || 0),
+                international: (responses[5] || 0) + (responses[11] || 0) + (responses[17] || 0),
+                analytics: (responses[6] || 0) + (responses[12] || 0) + (responses[18] || 0),
+                economics: (responses[19] || 0) + (responses[20] || 0) + (responses[21] || 0)
             };
             
-            // Clear form
-            document.getElementById('registrationForm').reset();
+            // Find the highest scoring major
+            let topMajor = '';
+            let topScore = 0;
+            for (const [major, score] of Object.entries(scores)) {
+                if (score > topScore) {
+                    topScore = score;
+                    topMajor = major;
+                }
+            }
             
-            // Clear quiz selections
-            document.querySelectorAll('.rating-btn').forEach(btn => {
-                btn.classList.remove('selected');
-            });
+            // Store results
+            studentData.result = topMajor;
+            studentData.scores = scores;
+            studentData.responses = responses;
             
-            // Reset progress
-            document.getElementById('progressFill').style.width = '0%';
-            document.getElementById('submitBtn').disabled = true;
+            // Submit to Google Forms (you'll need to add your form URL)
+            submitToGoogleForms(studentData);
             
-            // Show landing page
-            document.getElementById('landingContainer').style.display = 'block';
-            document.getElementById('quizContainer').style.display = 'none';
-            document.getElementById('resultContainer').style.display = 'none';
-            
-            // Clear quiz container
-            document.getElementById('questions').innerHTML = '';
+            // Show results
+            showResults(topMajor, scores);
         }
 
-        // Function to export all data (for administrators)
-        function exportAllData() {
-            const database = JSON.parse(localStorage.getItem('ualrQuizResults') || '[]');
-            const csv = convertToCSV(database);
+        function showResults(majorKey, scores) {
+            const profile = profiles[majorKey];
+            document.getElementById('quizScreen').classList.remove('active');
+            document.getElementById('resultScreen').classList.add('active');
             
-            const blob = new Blob([csv], { type: 'text/csv' });
+            const resultContent = document.getElementById('resultContent');
+            resultContent.innerHTML = `
+                <div class="result-title">${profile.emoji}</div>
+                <h2 class="result-title">${profile.title}</h2>
+                <p class="result-description">${profile.description}</p>
+                
+                <div class="result-details">
+                    <h3 style="color: #6B0F1A;">🎓 Your Recommended Path</h3>
+                    <p><strong>${profile.degree}</strong></p>
+                    <ul style="margin: 10px 0;">
+                        ${profile.concentrations.map(c => `<li>• ${c}</li>`).join('')}
+                    </ul>
+                    <p><strong>Faculty Advisor:</strong> ${profile.advisor}</p>
+                    <p><strong>Role Model:</strong> ${profile.roleModel}</p>
+                    
+                    <h3 style="color: #6B0F1A; margin-top: 20px;">📊 Your SWOT Analysis</h3>
+                    <div class="swot-grid">
+                        <div class="swot-box">
+                            <h4>Strengths</h4>
+                            <ul>
+                                ${profile.swot.strengths.map(s => `<li>${s}</li>`).join('')}
+                            </ul>
+                        </div>
+                        <div class="swot-box">
+                            <h4>Weaknesses</h4>
+                            <ul>
+                                ${profile.swot.weaknesses.map(w => `<li>${w}</li>`).join('')}
+                            </ul>
+                        </div>
+                        <div class="swot-box">
+                            <h4>Opportunities at UALR</h4>
+                            <ul>
+                                ${profile.swot.opportunities.map(o => `<li>${o}</li>`).join('')}
+                            </ul>
+                        </div>
+                        <div class="swot-box">
+                            <h4>Threats to Consider</h4>
+                            <ul>
+                                ${profile.swot.threats.map(t => `<li>${t}</li>`).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <h3 style="color: #6B0F1A; margin-top: 20px;">📈 Your Score Breakdown</h3>
+                    <ul style="list-style: none; padding: 0;">
+                        ${Object.entries(scores).sort((a, b) => b[1] - a[1]).map(([major, score]) => 
+                            `<li style="padding: 5px 0;">• <strong>${major.charAt(0).toUpperCase() + major.slice(1)}:</strong> ${score} points ${major === majorKey ? '🏆' : ''}</li>`
+                        ).join('')}
+                    </ul>
+                </div>
+                
+                <div style="margin-top: 30px;">
+                    <button class="btn" onclick="downloadResults()">📥 Download Results</button>
+                    <button class="btn btn-secondary" onclick="emailResults()">📧 Email Results</button>
+                    <button class="btn btn-secondary" onclick="retakeQuiz()">🔄 Retake Quiz</button>
+                </div>
+                
+                <div style="margin-top: 30px; padding: 20px; background: #f9f9f9; border-radius: 10px;">
+                    <h3 style="color: #6B0F1A;">🎓 Next Steps</h3>
+                    <p><strong>Connect with UALR School of Business:</strong></p>
+                    <p>📧 Email: business@ualr.edu</p>
+                    <p>📞 Phone: (501) 569-3356</p>
+                    <p>🌐 Website: ualr.edu/business</p>
+                </div>
+            `;
+        }
+
+        function submitToGoogleForms(data) {
+            // Replace with your Google Forms URL and entry IDs
+            const formUrl = 'YOUR_GOOGLE_FORM_URL';
+            
+            // This would submit to Google Forms
+            console.log('Submitting data:', data);
+            
+            // You'll need to set up the actual form submission
+            // Example:
+            // fetch(formUrl, {
+            //     method: 'POST',
+            //     mode: 'no-cors',
+            //     body: new URLSearchParams({
+            //         'entry.XXXXXX': data.name,
+            //         'entry.YYYYYY': data.email,
+            //         // etc.
+            //     })
+            // });
+        }
+
+        function downloadResults() {
+            // Create a text summary of results
+            const profile = profiles[studentData.result];
+            const resultText = `
+UALR Business Superpower Quiz Results
+======================================
+Name: ${studentData.name}
+Email: ${studentData.email}
+Date: ${new Date().toLocaleDateString()}
+
+Your Business Superpower: ${profile.title}
+${profile.description}
+
+Recommended Degree: ${profile.degree}
+Faculty Advisor: ${profile.advisor}
+
+Your Scores:
+${Object.entries(studentData.scores).sort((a, b) => b[1] - a[1])
+    .map(([major, score]) => `${major}: ${score} points`)
+    .join('\n')}
+
+Next Steps:
+Visit ualr.edu/business or call (501) 569-3356
+            `;
+            
+            // Create download link
+            const blob = new Blob([resultText], { type: 'text/plain' });
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `UALR_Quiz_Database_${new Date().toISOString().split('T')[0]}.csv`;
+            a.download = `UALR_Business_Quiz_Results_${studentData.name.replace(/\s+/g, '_')}.txt`;
             a.click();
         }
 
-        function convertToCSV(data) {
-            if (data.length === 0) return '';
+        function emailResults() {
+            const profile = profiles[studentData.result];
+            const subject = `Your UALR Business Superpower Results: ${profile.title}`;
+            const body = `Hi ${studentData.name},\n\nThank you for taking the UALR Business Superpower Quiz!\n\nYour Result: ${profile.title}\n${profile.description}\n\nRecommended Degree: ${profile.degree}\n\nTo learn more about this program, contact:\n${profile.advisor}\nbusiness@ualr.edu\n(501) 569-3356\n\nVisit ualr.edu/business to apply today!`;
             
-            const headers = ['Timestamp', 'Name', 'Email', 'School', 'Grad Year', 'Result', 'MKT Score', 'FIN Score', 'ACC Score', 'ENT Score', 'MGT Score', 'IB Score', 'BAIS Score'];
-            
-            const rows = data.map(row => [
-                row.timestamp,
-                row.name,
-                row.email,
-                row.school,
-                row.gradYear,
-                row.result,
-                row.scores.MKT || 0,
-                row.scores.FIN || 0,
-                row.scores.ACC || 0,
-                row.scores.ENT || 0,
-                row.scores.MGT || 0,
-                row.scores.IB || 0,
-                row.scores.BAIS || 0
-            ]);
-            
-            return [headers, ...rows].map(row => row.join(',')).join('\n');
+            window.location.href = `mailto:${studentData.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
         }
 
-        // Admin function - add this to console to download all data:
-        // exportAllData()
+        function retakeQuiz() {
+            currentQuestion = 0;
+            responses = {};
+            studentData = {};
+            document.getElementById('resultScreen').classList.remove('active');
+            document.getElementById('startScreen').classList.add('active');
+        }
     </script>
 </body>
 </html>
