@@ -615,6 +615,7 @@
             scores: {}
         };
 
+        // UPDATED: Now includes all 21 questions (added Economics questions 19-21)
         const questions = [
             { id: 1, text: "I love brainstorming slogans, visuals, or campaign ideas", category: "MKT" },
             { id: 2, text: "I enjoy solving puzzles with data, charts, or spreadsheets", category: "FIN" },
@@ -633,9 +634,14 @@
             { id: 15, text: "I'd love to start my own venture one day", category: "ENT" },
             { id: 16, text: "I enjoy coaching or leading groups toward a goal", category: "MGT" },
             { id: 17, text: "I'm interested in how business works across countries", category: "IB" },
-            { id: 18, text: "I want to automate tasks and make processes smarter", category: "BAIS" }
+            { id: 18, text: "I want to automate tasks and make processes smarter", category: "BAIS" },
+            // NEW ECONOMICS QUESTIONS
+            { id: 19, text: "I'm fascinated by how supply, demand, and market forces shape society", category: "ECON" },
+            { id: 20, text: "I enjoy analyzing economic policies and their impact on businesses and communities", category: "ECON" },
+            { id: 21, text: "I want to understand global economic trends and predict market behavior", category: "ECON" }
         ];
 
+        // UPDATED: Added Economics (ECON) profile
         const profiles = {
             MKT: {
                 title: "The Storyteller",
@@ -727,6 +733,20 @@
                 opportunities: ["Startup Incubator", "Pitch Competitions", "Venture Capital Network"],
                 threats: ["High failure rate", "Financial uncertainty"],
                 leadership: "Builder/Founder"
+            },
+            // NEW ECONOMICS PROFILE
+            ECON: {
+                title: "The Economic Analyst",
+                icon: "📉",
+                roleModel: "Janet Yellen / Paul Krugman",
+                description: "You analyze how societies allocate resources and predict market behaviors",
+                path: "B.B.A. in Economics with Quantitative Economics focus available",
+                professor: "Dr. John Hall",
+                strengths: ["Systems thinking", "Policy analysis", "Statistical modeling"],
+                weaknesses: ["Too theoretical", "May lack practical business skills"],
+                opportunities: ["Arkansas Economic Development Commission internships", "Research with UALR Economic Research Center", "Policy analysis projects", "Economics Speaker Series"],
+                threats: ["Abstract concepts", "Heavy math/statistics requirements"],
+                leadership: "Market Strategist"
             }
         };
 
@@ -839,6 +859,7 @@
         }
 
         function calculateResults() {
+            // UPDATED: Now includes ECON in scores
             const scores = {
                 MKT: 0,
                 FIN: 0,
@@ -846,15 +867,16 @@
                 ENT: 0,
                 MGT: 0,
                 IB: 0,
-                BAIS: 0
+                BAIS: 0,
+                ECON: 0  // Added Economics
             };
 
             // Calculate scores based on the correct scoring key
             // Marketing & Professional Sales: Questions 1, 7, 13
             scores.MKT = (answers[1] || 0) + (answers[7] || 0) + (answers[13] || 0);
             
-            // Finance & Investing: Questions 2, 14, (optionally 12)
-            scores.FIN = (answers[2] || 0) + (answers[14] || 0) + (answers[12] || 0);
+            // Finance & Investing: Questions 2, 14
+            scores.FIN = (answers[2] || 0) + (answers[14] || 0);
             
             // Accounting: Question 8 + whichever of 2 or 14 is higher
             scores.ACC = (answers[8] || 0) + Math.max(answers[2] || 0, answers[14] || 0);
@@ -870,6 +892,9 @@
             
             // Business Analytics & Information Systems: Questions 6, 12, 18
             scores.BAIS = (answers[6] || 0) + (answers[12] || 0) + (answers[18] || 0);
+            
+            // ECONOMICS: Questions 19, 20, 21
+            scores.ECON = (answers[19] || 0) + (answers[20] || 0) + (answers[21] || 0);
 
             // Store scores
             userData.scores = scores;
@@ -1015,6 +1040,7 @@ Entrepreneurship: ${userData.scores.ENT}
 Management: ${userData.scores.MGT}
 International Business: ${userData.scores.IB}
 Business Analytics: ${userData.scores.BAIS}
+Economics: ${userData.scores.ECON}
 
 TIMESTAMP: ${new Date().toLocaleString()}
             `.trim();
@@ -1073,7 +1099,7 @@ TIMESTAMP: ${new Date().toLocaleString()}
                     professor: profile.professor,
                     strengths: profile.strengths.join(', '),
                     opportunities: profile.opportunities.join(', '),
-                    scores: `Marketing: ${userData.scores.MKT}, Finance: ${userData.scores.FIN}, Accounting: ${userData.scores.ACC}, Business Analytics: ${userData.scores.BAIS}, Management: ${userData.scores.MGT}, International Business: ${userData.scores.IB}, Entrepreneurship: ${userData.scores.ENT}`
+                    scores: `Marketing: ${userData.scores.MKT}, Finance: ${userData.scores.FIN}, Accounting: ${userData.scores.ACC}, Business Analytics: ${userData.scores.BAIS}, Management: ${userData.scores.MGT}, International Business: ${userData.scores.IB}, Entrepreneurship: ${userData.scores.ENT}, Economics: ${userData.scores.ECON}`
                 };
                 
                 // Show loading
@@ -1130,6 +1156,7 @@ Business Analytics: ${userData.scores.BAIS}
 Management: ${userData.scores.MGT}
 International Business: ${userData.scores.IB}
 Entrepreneurship: ${userData.scores.ENT}
+Economics: ${userData.scores.ECON}
 
 Best regards,
 ${userData.name}
@@ -1263,6 +1290,7 @@ ${userData.name}
             doc.text(`Marketing: ${userData.scores.MKT}     Finance: ${userData.scores.FIN}     Accounting: ${userData.scores.ACC}`, 105, 255, { align: 'center' });
             doc.text(`Management: ${userData.scores.MGT}     International Business: ${userData.scores.IB}`, 105, 262, { align: 'center' });
             doc.text(`Business Analytics: ${userData.scores.BAIS}     Entrepreneurship: ${userData.scores.ENT}`, 105, 269, { align: 'center' });
+            doc.text(`Economics: ${userData.scores.ECON}`, 105, 276, { align: 'center' });
             
             // Footer
             doc.setFillColor(107, 15, 26);
@@ -1368,7 +1396,7 @@ ${userData.name}
         function convertToCSV(data) {
             if (data.length === 0) return '';
             
-            const headers = ['Timestamp', 'Name', 'Email', 'School', 'Grad Year', 'Result', 'MKT Score', 'FIN Score', 'ACC Score', 'ENT Score', 'MGT Score', 'IB Score', 'BAIS Score'];
+            const headers = ['Timestamp', 'Name', 'Email', 'School', 'Grad Year', 'Result', 'MKT Score', 'FIN Score', 'ACC Score', 'ENT Score', 'MGT Score', 'IB Score', 'BAIS Score', 'ECON Score'];
             
             const rows = data.map(row => [
                 row.timestamp,
@@ -1383,7 +1411,8 @@ ${userData.name}
                 row.scores.ENT || 0,
                 row.scores.MGT || 0,
                 row.scores.IB || 0,
-                row.scores.BAIS || 0
+                row.scores.BAIS || 0,
+                row.scores.ECON || 0
             ]);
             
             return [headers, ...rows].map(row => row.join(',')).join('\n');
